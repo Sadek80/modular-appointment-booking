@@ -1,10 +1,10 @@
 package sadek.doctorAppointments.doctorAvailability;
 
-import sadek.doctorAppointments.appointmentsConfirmation.domain.test1;
+import sadek.doctorAppointments.shared.infrastructure.DateTimeProvider;
 
 public class test {
 
     void test(){
-     var v1 = new test1();
+     var v1 = new DateTimeProvider();
     }
 }
