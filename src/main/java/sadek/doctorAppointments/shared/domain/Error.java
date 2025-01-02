@@ -1,17 +1,6 @@
 package sadek.doctorAppointments.shared.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
-@Getter
-@AllArgsConstructor
-@ToString
-public class Error {
-    private final String code;
-    private final String description;
-    private final ErrorType type;
-
+public record Error(String code, String description, ErrorType type) {
     public static final Error NONE = new Error("", "", ErrorType.FAILURE);
     public static final Error NULL_VALUE = new Error(
             "General.Null",

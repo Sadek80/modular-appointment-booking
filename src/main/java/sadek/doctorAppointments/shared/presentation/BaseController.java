@@ -39,7 +39,7 @@ public abstract class BaseController {
     }
 
     private static HttpStatus getHttpStatus(Error error) {
-        return switch (error.getType()) {
+        return switch (error.type()) {
             case NOT_FOUND -> HttpStatus.NOT_FOUND;
             case CONFLICT -> HttpStatus.CONFLICT;
             case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
