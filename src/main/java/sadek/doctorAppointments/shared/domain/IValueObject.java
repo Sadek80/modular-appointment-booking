@@ -1,4 +1,4 @@
 package sadek.doctorAppointments.shared.domain;
 
-public interface DomainEvent {
+public interface IValueObject {
 }
