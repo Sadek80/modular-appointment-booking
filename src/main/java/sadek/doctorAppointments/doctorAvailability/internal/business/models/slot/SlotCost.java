@@ -6,7 +6,7 @@ import sadek.doctorAppointments.shared.domain.IValueObject;
 public record SlotCost(Double value) implements IValueObject {
     public SlotCost {
         if (value <= 0) {
-            throw new InvalidSlotCost("Slot cost must be greater than zero");
+            throw new InvalidSlotCost(SlotErrors.unSufficientCost);
         }
     }
 }

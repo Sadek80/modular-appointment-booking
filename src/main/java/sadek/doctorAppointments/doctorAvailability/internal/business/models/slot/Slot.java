@@ -18,8 +18,8 @@ public class Slot extends Entity<SlotId> {
     private SlotCost cost;
     private boolean isReserved;
 
-    public static Integer MIN_HOURS_BEFORE_SLOT_UPDATE = 2;
-    public static Integer MIN_SLOT_HOURS_DURATION = 2;
+    public static Integer MAX_HOURS_BEFORE_SLOT_UPDATE = 2;
+    public static Integer MAX_SLOT_HOURS_DURATION = 2;
 
     private Slot(SlotId slotId, DoctorId doctorId, TimeRange timeRange, SlotCost cost) {
         setId(slotId);
@@ -82,8 +82,8 @@ public class Slot extends Entity<SlotId> {
     }
 
     private void validateSlotUpdateEligibility(LocalDateTime now) {
-        if (this.isReserved && now.isAfter(this.timeRange.startTime().minusHours(MIN_HOURS_BEFORE_SLOT_UPDATE))) {
-            throw new SlotUpdateViolation("Reserved Slot cannot be updated less than 2 hours before its start time");
+        if (this.isReserved && now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_SLOT_UPDATE))) {
+            throw new SlotUpdateViolation(SlotErrors.updateTimeViolated);
         }
     }
 
@@ -92,14 +92,13 @@ public class Slot extends Entity<SlotId> {
         validateTimeRangeDuration(newTimeRange);
 
         if (this.isReserved && !this.timeRange.isSameDayWith(newTimeRange)){
-            throw new InvalidSlotTimeRange("Change Reserved Slot start and end time day is not allowed. " +
-                    "Please cancel appointment first.");
+            throw new SlotUpdateViolation(SlotErrors.updateDateViolated);
         }
     }
 
     private static void validateTimeRangeDuration(TimeRange timeRange) {
-        if (timeRange.durationInHours() > MIN_SLOT_HOURS_DURATION) {
-            throw new InvalidSlotTimeRange("A single slot cannot exceed 2 hours in duration");
+        if (timeRange.durationInHours() > MAX_SLOT_HOURS_DURATION) {
+            throw new InvalidSlotTimeRange(SlotErrors.durationExceeded);
         }
     }
 
@@ -109,7 +108,7 @@ public class Slot extends Entity<SlotId> {
                 .anyMatch(existingSlot -> existingSlot.getTimeRange().overlapsWith(this.timeRange));
 
         if (hasOverlap) {
-            throw new InvalidSlotTimeRange("Slot overlaps with an existing slot");
+            throw new InvalidSlotTimeRange(SlotErrors.overlapped);
         }
     }
 }

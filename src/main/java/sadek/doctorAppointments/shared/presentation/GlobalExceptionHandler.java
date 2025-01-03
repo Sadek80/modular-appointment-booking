@@ -41,7 +41,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({DomainException.class})
     public ResponseEntity<Object> handleDomainException(DomainException ex, WebRequest request) {
         Map<String, String> body = new HashMap<>();
-        body.put("description", ex.getMessage());
+        body.put("description", ex.getError().description());
+        body.put("code", ex.getError().code());
+        body.put("error_type", ex.getError().type().name());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }

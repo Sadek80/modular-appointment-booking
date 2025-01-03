@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public record TimeRange(LocalDateTime startTime, LocalDateTime endTime) implements IValueObject {
     public TimeRange {
         if (startTime.isAfter(endTime) || isNotSameDay(startTime, endTime)) {
-            throw new InvalidSlotTimeRange("Start time must be before end time and in same day");
+            throw new InvalidSlotTimeRange(SlotErrors.invalidTimeRange);
         }
     }
 
@@ -31,7 +31,7 @@ public record TimeRange(LocalDateTime startTime, LocalDateTime endTime) implemen
 
     public void validateNewTimeRangeNotInThePast(LocalDateTime now) {
         if (startTime.isBefore(now) || endTime.isBefore(now)) {
-            throw new InvalidSlotTimeRange("Slot time must be in the future");
+            throw new InvalidSlotTimeRange(SlotErrors.pastTimeRange);
         }
     }
 }
