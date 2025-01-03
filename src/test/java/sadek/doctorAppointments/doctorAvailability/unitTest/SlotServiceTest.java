@@ -12,8 +12,11 @@ import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.Slo
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
 import sadek.doctorAppointments.doctorAvailability.internal.business.services.SlotService;
+import sadek.doctorAppointments.doctorAvailability.internal.data.entities.DoctorEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
+import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
+import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedEvent;
 import sadek.doctorAppointments.shared.domain.*;
 
 import java.time.LocalDateTime;
@@ -32,6 +35,9 @@ class SlotServiceTest {
 
     @Mock
     private ISlotRepository slotRepository;
+
+    @Mock
+    private IDoctorRepository doctorRepository;
 
     @Mock
     private SlotMapper slotMapper;
@@ -56,23 +62,26 @@ class SlotServiceTest {
 
         when(doctorContext.getUserId()).thenReturn(doctorId);
         when(dateTimeProvider.nowDateTime()).thenReturn(now);
+        when(doctorRepository.getReferenceById(doctorId)).thenReturn(mock(DoctorEntity.class)); // Mock doctor reference
     }
+
 
     @Test
     void createSlot_validRequest_shouldCreateSlot() {
         CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 50.0);
-        Slot slot = mock(Slot.class);
+        Slot newSlot = mock(Slot.class);
         SlotEntity slotEntity = mock(SlotEntity.class);
 
-        when(slotMapper.mapToSlotEntity(slot)).thenReturn(slotEntity);
+        when(slotMapper.mapToSlotEntity(any(Slot.class))).thenReturn(slotEntity);
         when(slotRepository.findAllByDoctorId(doctorId)).thenReturn(Collections.emptyList());
 
         Result<Response<UUID>> result = slotService.createSlot(request);
 
-        verify(slotRepository).save(any());
+        verify(slotRepository).save(slotEntity);
+        verify(slotMapper).mapToSlotEntity(any(Slot.class));
+        verify(eventBus, times(0)).publish(any());
 
         assertTrue(result.isSuccess());
-        assertNotNull(result.getValue().getData());
         assertEquals("New slot created", result.getValue().getMessage());
     }
 
@@ -94,18 +103,26 @@ class SlotServiceTest {
     @Test
     void updateSlot_validRequest_shouldUpdateSlot() {
         UUID slotId = UUID.randomUUID();
-        CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 50.0);
+        CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 60.0);
         Slot slot = mock(Slot.class);
+        SlotEntity slotEntity = mock(SlotEntity.class);
+        DoctorEntity doctorEntity = mock(DoctorEntity.class);
 
-        when(slotRepository.findById(slotId)).thenReturn(Optional.of(mock(SlotEntity.class)));
-        when(slotMapper.mapToSlot(any(SlotEntity.class))).thenReturn(slot);
+        when(slotRepository.findById(slotId)).thenReturn(Optional.of(slotEntity));
+        when(slotMapper.mapToSlot(slotEntity)).thenReturn(slot);
+        when(slotMapper.mapToSlotEntity(slot)).thenReturn(slotEntity);
+        when(doctorRepository.getReferenceById(doctorId)).thenReturn(doctorEntity);
 
-        when(slotMapper.mapToSlot(any(SlotEntity.class))).thenReturn(slot);
+        SlotUpdatedEvent slotUpdatedEvent = new SlotUpdatedEvent(slotId, request.startTime(), request.endTime(), request.cost());
+        when(slot.occurredEvents()).thenReturn(List.of(slotUpdatedEvent));
 
         Result<Void> result = slotService.updateSlot(slotId, request);
 
         verify(slot).update(request.startTime(), request.endTime(), request.cost(), now);
-        verify(slotRepository).save(any());
+        verify(slotEntity).setDoctor(doctorEntity);
+        verify(slotRepository).save(slotEntity);
+        verify(eventBus).publish(slotUpdatedEvent);
+        verify(slot).clearDomainEvents();
 
         assertTrue(result.isSuccess());
     }
