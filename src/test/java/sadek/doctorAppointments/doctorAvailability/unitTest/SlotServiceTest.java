@@ -1,0 +1,128 @@
+package sadek.doctorAppointments.doctorAvailability.unitTest;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateSlotDto;
+import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
+import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
+import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
+import sadek.doctorAppointments.doctorAvailability.internal.business.services.SlotService;
+import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
+import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
+import sadek.doctorAppointments.shared.domain.*;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class SlotServiceTest {
+
+    @Mock
+    private DoctorContext doctorContext;
+
+    @Mock
+    private ISlotRepository slotRepository;
+
+    @Mock
+    private SlotMapper slotMapper;
+
+    @Mock
+    private IDateTimeProvider dateTimeProvider;
+
+    @Mock
+    private IEventBus eventBus;
+
+    @InjectMocks
+    private SlotService slotService;
+
+    private UUID doctorId;
+    private LocalDateTime now;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        doctorId = UUID.randomUUID();
+        now = LocalDateTime.now();
+
+        when(doctorContext.getUserId()).thenReturn(doctorId);
+        when(dateTimeProvider.nowDateTime()).thenReturn(now);
+    }
+
+    @Test
+    void createSlot_validRequest_shouldCreateSlot() {
+        CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 50.0);
+        Slot slot = mock(Slot.class);
+        SlotEntity slotEntity = mock(SlotEntity.class);
+
+        when(slotMapper.mapToSlotEntity(slot)).thenReturn(slotEntity);
+        when(slotRepository.findAllByDoctorId(doctorId)).thenReturn(Collections.emptyList());
+
+        Result<Response<UUID>> result = slotService.createSlot(request);
+
+        verify(slotRepository).save(any());
+
+        assertTrue(result.isSuccess());
+        assertNotNull(result.getValue().getData());
+        assertEquals("New slot created", result.getValue().getMessage());
+    }
+
+    @Test
+    void getAllSlots_shouldReturnAllSlots() {
+        SlotEntity slotEntity = mock(SlotEntity.class);
+        SlotDto slotDto = mock(SlotDto.class);
+
+        when(slotRepository.findAllByDoctorIdWithDoctor(doctorId)).thenReturn(List.of(slotEntity));
+        when(slotMapper.mapToSlotDtoList(anyList())).thenReturn(List.of(slotDto));
+
+        Result<Response<List<SlotDto>>> result = slotService.getAllSlots();
+
+        assertTrue(result.isSuccess());
+        assertEquals(1, result.getValue().getData().size());
+        assertEquals(slotDto, result.getValue().getData().get(0));
+    }
+
+    @Test
+    void updateSlot_validRequest_shouldUpdateSlot() {
+        UUID slotId = UUID.randomUUID();
+        CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 50.0);
+        Slot slot = mock(Slot.class);
+
+        when(slotRepository.findById(slotId)).thenReturn(Optional.of(mock(SlotEntity.class)));
+        when(slotMapper.mapToSlot(any(SlotEntity.class))).thenReturn(slot);
+
+        when(slotMapper.mapToSlot(any(SlotEntity.class))).thenReturn(slot);
+
+        Result<Void> result = slotService.updateSlot(slotId, request);
+
+        verify(slot).update(request.startTime(), request.endTime(), request.cost(), now);
+        verify(slotRepository).save(any());
+
+        assertTrue(result.isSuccess());
+    }
+
+    @Test
+    void updateSlot_nonExistentSlot_shouldReturnNotFound() {
+        UUID slotId = UUID.randomUUID();
+        CreateSlotDto request = new CreateSlotDto(now.plusDays(1), now.plusDays(1).plusHours(2), 50.0);
+
+        when(slotRepository.findById(slotId)).thenReturn(Optional.empty());
+
+        Result<Void> result = slotService.updateSlot(slotId, request);
+
+        verify(slotRepository, never()).save(any());
+        verify(eventBus, never()).publish(any());
+        assertFalse(result.isSuccess());
+        assertEquals(SlotErrors.notFound, result.getError());
+    }
+}
+
