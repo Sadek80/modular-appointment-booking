@@ -79,6 +79,22 @@ public class SlotService implements IDoctorAvailabilityApi {
         return Result.success();
     }
 
+    @Override
+    public Result<Void> releaseSlot(UUID slotId) {
+        Slot slot = getSlot(slotId);
+
+        if (slot == null) {
+            return Result.failure(SlotErrors.notFound);
+        }
+
+        slot.release();
+
+        slotRepository.save(constructSlotEntity(slot));
+        publishEvents(slot);
+
+        return Result.success();
+    }
+
     private Slot getSlot(UUID slotId) {
         SlotEntity slotEntity = slotRepository.findById(slotId).orElse(null);
         return slotMapper.mapToSlot(slotEntity);
@@ -101,21 +117,5 @@ public class SlotService implements IDoctorAvailabilityApi {
             newSlot.occurredEvents().forEach(eventBus::publish);
             newSlot.clearDomainEvents();
         }
-    }
-
-    @Override
-    public Result<Void> releaseSlot(UUID slotId) {
-        Slot slot = getSlot(slotId);
-
-        if (slot == null) {
-            return Result.failure(SlotErrors.notFound);
-        }
-
-        slot.release();
-
-        slotRepository.save(constructSlotEntity(slot));
-        publishEvents(slot);
-
-        return Result.success();
     }
 }
