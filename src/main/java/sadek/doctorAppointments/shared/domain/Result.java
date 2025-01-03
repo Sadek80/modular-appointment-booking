@@ -18,6 +18,10 @@ public class Result<T> {
         return new Result<>(value, Error.NONE, true);
     }
 
+    public static <T> Result<T> success() {
+        return new Result<>(null, Error.NONE, true);
+    }
+
     public static <T> Result<T> failure(Error error) {
         return new Result<>(null, error, false);
     }

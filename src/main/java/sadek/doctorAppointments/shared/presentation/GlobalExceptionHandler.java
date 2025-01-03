@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import sadek.doctorAppointments.shared.application.exceptions.AppException;
+import sadek.doctorAppointments.shared.application.exceptions.DomainException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +36,14 @@ public class GlobalExceptionHandler {
         body.put("description", ex.getMessage());
 
         return ResponseEntity.status(status).body(body);
+    }
+
+    @ExceptionHandler({DomainException.class})
+    public ResponseEntity<Object> handleDomainException(DomainException ex, WebRequest request) {
+        Map<String, String> body = new HashMap<>();
+        body.put("description", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     @ExceptionHandler({Exception.class, RuntimeException.class})

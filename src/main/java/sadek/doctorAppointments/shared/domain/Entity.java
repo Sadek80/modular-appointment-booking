@@ -21,4 +21,8 @@ public abstract class Entity<TID> {
     public void raiseDomainEvent(IDomainEvent event) {
         domainEvents.add(event);
     }
+
+    public void clearDomainEvents() {
+        domainEvents.clear();
+    }
 }

@@ -19,4 +19,12 @@ public class Response<TData> {
     public static <T> Response<T> create(T data, String message) {
         return new Response<>(data, message);
     }
+
+    public static Response<Void> create() {
+        return new Response<Void>(null, "");
+    }
+
+    public static Response<Void> create(String message) {
+        return new Response<Void>(null, message);
+    }
 }
