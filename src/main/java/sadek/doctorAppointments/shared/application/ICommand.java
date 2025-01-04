@@ -1,4 +1,4 @@
 package sadek.doctorAppointments.shared.application;
 
-public interface Command {
+public interface ICommand {
 }
