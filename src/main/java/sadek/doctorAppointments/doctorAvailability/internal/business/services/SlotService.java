@@ -2,6 +2,7 @@ package sadek.doctorAppointments.doctorAvailability.internal.business.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateSlotDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
@@ -9,6 +10,7 @@ import sadek.doctorAppointments.doctorAvailability.internal.business.models.doct
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
+import sadek.doctorAppointments.doctorAvailability.internal.data.config.DoctorAvailabilityConfig;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
@@ -31,6 +33,7 @@ public class SlotService implements IDoctorAvailabilityApi {
     private final IDateTimeProvider dateTimeProvider;
     private final IEventBus eventBus;
 
+    @Transactional(DoctorAvailabilityConfig.TRANSACTION_MANAGER)
     public Result<Response<UUID>> createSlot(CreateSlotDto request) {
         List<Slot> existingSlots = getDoctorExistingSLots();
 
@@ -58,6 +61,7 @@ public class SlotService implements IDoctorAvailabilityApi {
         );
     }
 
+    @Transactional(DoctorAvailabilityConfig.TRANSACTION_MANAGER)
     public Result<Void> updateSlot(UUID slotId, CreateSlotDto request) {
         Slot slot = getSlot(slotId);
 

@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAvailability.publicAPI.events;
+package sadek.doctorAppointments.doctorAvailability.internal.business.events;
 
 import sadek.doctorAppointments.shared.domain.IDomainEvent;
 

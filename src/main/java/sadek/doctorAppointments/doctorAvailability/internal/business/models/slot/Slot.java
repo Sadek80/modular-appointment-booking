@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.models.slot;
 
 import lombok.Getter;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedEvent;
+import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
 import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.InvalidSlotTimeRange;
 import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotUpdateViolation;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
