@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business;
+package sadek.doctorAppointments.doctorAvailability.internal.business.eventHandlers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
