@@ -1,10 +1,9 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.eventHandlers;
+package sadek.doctorAppointments.doctorAvailability.internal.business.events;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
 import sadek.doctorAppointments.doctorAvailability.internal.business.services.SlotService;
 import sadek.doctorAppointments.shared.domain.ILogger;
 
