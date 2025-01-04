@@ -9,8 +9,8 @@ import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateS
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.SlotErrors;
 import sadek.doctorAppointments.doctorAvailability.internal.business.services.SlotService;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.DoctorEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;

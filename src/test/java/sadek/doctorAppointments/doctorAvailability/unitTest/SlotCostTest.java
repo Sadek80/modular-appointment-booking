@@ -1,8 +1,8 @@
 package sadek.doctorAppointments.doctorAvailability.unitTest;
 
 import org.junit.jupiter.api.Test;
-import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.InvalidSlotCost;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotCost;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidCost;
+import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ public class SlotCostTest {
     void constructor_validSlotCost_shouldCreateSlotCost() {
         double validCost = 50.0;
 
-        SlotCost slotCost = new SlotCost(validCost);
+        Cost slotCost = new Cost(validCost);
 
         assertNotNull(slotCost);
         assertEquals(validCost, slotCost.value());
@@ -21,21 +21,21 @@ public class SlotCostTest {
     void constructor_zeroSlotCost_shouldThrowInvalidSlotCost() {
         double zeroCost = 0.0;
 
-        assertThrows(InvalidSlotCost.class, () -> new SlotCost(zeroCost));
+        assertThrows(InvalidCost.class, () -> new Cost(zeroCost));
     }
 
     @Test
     void constructor_negativeSlotCost_shouldThrowInvalidSlotCost() {
         double negativeCost = -10.0;
 
-        assertThrows(InvalidSlotCost.class, () -> new SlotCost(negativeCost));
+        assertThrows(InvalidCost.class, () -> new Cost(negativeCost));
     }
 
     @Test
     void value_getValue_shouldReturnCorrectCost() {
         double costValue = 100.0;
 
-        SlotCost slotCost = new SlotCost(costValue);
+        Cost slotCost = new Cost(costValue);
 
         assertEquals(costValue, slotCost.value());
     }

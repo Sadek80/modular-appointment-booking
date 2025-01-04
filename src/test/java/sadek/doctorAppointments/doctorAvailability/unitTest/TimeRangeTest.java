@@ -1,8 +1,8 @@
 package sadek.doctorAppointments.doctorAvailability.unitTest;
 
 import org.junit.jupiter.api.Test;
-import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.InvalidSlotTimeRange;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.TimeRange;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRange;
+import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
 
 import java.time.LocalDateTime;
 
@@ -27,7 +27,7 @@ class TimeRangeTest {
         LocalDateTime startTime = LocalDateTime.of(2025, 1, 3, 12, 0);
         LocalDateTime endTime = LocalDateTime.of(2025, 1, 3, 10, 0);
 
-        assertThrows(InvalidSlotTimeRange.class, () -> new TimeRange(startTime, endTime));
+        assertThrows(InvalidTimeRange.class, () -> new TimeRange(startTime, endTime));
     }
 
     @Test
@@ -35,7 +35,7 @@ class TimeRangeTest {
         LocalDateTime startTime = LocalDateTime.of(2025, 1, 3, 23, 0);
         LocalDateTime endTime = LocalDateTime.of(2025, 1, 4, 1, 0);
 
-        assertThrows(InvalidSlotTimeRange.class, () -> new TimeRange(startTime, endTime));
+        assertThrows(InvalidTimeRange.class, () -> new TimeRange(startTime, endTime));
     }
 
     @Test
@@ -118,6 +118,6 @@ class TimeRangeTest {
 
         TimeRange timeRange = new TimeRange(startTime, endTime);
 
-        assertThrows(InvalidSlotTimeRange.class, () -> timeRange.validateNewTimeRangeNotInThePast(now));
+        assertThrows(InvalidTimeRange.class, () -> timeRange.validateNewTimeRangeNotInThePast(now));
     }
 }

@@ -1,8 +1,6 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor;
+package sadek.doctorAppointments.shared.domain.doctor;
 
 import sadek.doctorAppointments.shared.domain.Entity;
-
-import java.util.UUID;
 
 public class Doctor extends Entity<DoctorId> {
     private final String name;

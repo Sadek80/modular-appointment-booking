@@ -1,11 +1,13 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.models.slot;
+package sadek.doctorAppointments.doctorAvailability.internal.business.models;
 
 import lombok.Getter;
 import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
-import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.InvalidSlotTimeRange;
-import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotUpdateViolation;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRange;
+import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotRuleViolation;
+import sadek.doctorAppointments.shared.domain.doctor.DoctorId;
 import sadek.doctorAppointments.shared.domain.Entity;
+import sadek.doctorAppointments.shared.domain.valueObject.Cost;
+import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,13 +17,13 @@ import java.util.UUID;
 public class Slot extends Entity<SlotId> {
     private final DoctorId doctorId;
     private TimeRange timeRange;
-    private SlotCost cost;
+    private Cost cost;
     private boolean isReserved;
 
     public static Integer MAX_HOURS_BEFORE_SLOT_UPDATE = 2;
     public static Integer MAX_SLOT_HOURS_DURATION = 2;
 
-    private Slot(SlotId slotId, DoctorId doctorId, TimeRange timeRange, SlotCost cost) {
+    private Slot(SlotId slotId, DoctorId doctorId, TimeRange timeRange, Cost cost) {
         setId(slotId);
         this.doctorId = doctorId;
         this.timeRange = timeRange;
@@ -33,7 +35,7 @@ public class Slot extends Entity<SlotId> {
         this.setId(new SlotId(id));
         this.doctorId = new DoctorId(doctorId);
         this.timeRange = new TimeRange(startTime, endTime);
-        this.cost = new SlotCost(cost);
+        this.cost = new Cost(cost);
     }
 
     public static Slot create(DoctorId doctorId,
@@ -47,7 +49,7 @@ public class Slot extends Entity<SlotId> {
 
         validateTimeRangeDuration(timeRange);
 
-        SlotCost slotCost = new SlotCost(cost);
+        Cost slotCost = new Cost(cost);
 
         return new Slot(SlotId.generate(), doctorId, timeRange, slotCost);
     }
@@ -62,7 +64,7 @@ public class Slot extends Entity<SlotId> {
         TimeRange newTimeRange = new TimeRange(startTime, endTime);
         validateTimeRangeUpdate(newTimeRange, now);
 
-        this.cost = new SlotCost(cost);
+        this.cost = new Cost(cost);
         this.timeRange = newTimeRange;
 
         raiseDomainEvent(new SlotUpdatedEvent(this.getId().value(),
@@ -83,7 +85,7 @@ public class Slot extends Entity<SlotId> {
 
     private void validateSlotUpdateEligibility(LocalDateTime now) {
         if (this.isReserved && now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_SLOT_UPDATE))) {
-            throw new SlotUpdateViolation(SlotErrors.updateTimeViolated);
+            throw new SlotRuleViolation(SlotErrors.updateTimeViolated);
         }
     }
 
@@ -92,13 +94,13 @@ public class Slot extends Entity<SlotId> {
         validateTimeRangeDuration(newTimeRange);
 
         if (this.isReserved && !this.timeRange.isSameDayWith(newTimeRange)){
-            throw new SlotUpdateViolation(SlotErrors.updateDateViolated);
+            throw new SlotRuleViolation(SlotErrors.updateDateViolated);
         }
     }
 
     private static void validateTimeRangeDuration(TimeRange timeRange) {
         if (timeRange.durationInHours() > MAX_SLOT_HOURS_DURATION) {
-            throw new InvalidSlotTimeRange(SlotErrors.durationExceeded);
+            throw new SlotRuleViolation(SlotErrors.durationExceeded);
         }
     }
 
@@ -108,7 +110,7 @@ public class Slot extends Entity<SlotId> {
                 .anyMatch(existingSlot -> existingSlot.getTimeRange().overlapsWith(this.timeRange));
 
         if (hasOverlap) {
-            throw new InvalidSlotTimeRange(SlotErrors.overlapped);
+            throw new SlotRuleViolation(SlotErrors.overlapped);
         }
     }
 }

@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.helpers;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.Doctor;
+import sadek.doctorAppointments.shared.domain.doctor.Doctor;
 import sadek.doctorAppointments.shared.application.IUserContext;
 
 import java.util.UUID;

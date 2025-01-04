@@ -2,7 +2,7 @@ package sadek.doctorAppointments.doctorAvailability.internal.business.mappers;
 
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 
 import java.util.List;
