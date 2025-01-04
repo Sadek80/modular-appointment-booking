@@ -104,17 +104,20 @@ class TimeRangeTest {
     void validateNewTimeRangeNotInThePast_futureTimeRange_shouldNotThrowException() {
         LocalDateTime startTime = LocalDateTime.of(2025, 1, 4, 10, 0);
         LocalDateTime endTime = LocalDateTime.of(2025, 1, 4, 12, 0);
+        LocalDateTime now = LocalDateTime.of(2025, 1, 3, 12, 0);
         TimeRange timeRange = new TimeRange(startTime, endTime);
 
-        assertDoesNotThrow(() -> timeRange.validateNewTimeRangeNotInThePast(LocalDateTime.now()));
+        assertDoesNotThrow(() -> timeRange.validateNewTimeRangeNotInThePast(now));
     }
 
     @Test
     void validateNewTimeRangeNotInThePast_pastTimeRange_shouldThrowInvalidSlotTimeRange() {
         LocalDateTime startTime = LocalDateTime.of(2024, 12, 30, 10, 0);
         LocalDateTime endTime = LocalDateTime.of(2024, 12, 30, 12, 0);
+        LocalDateTime now = LocalDateTime.of(2025, 1, 3, 12, 0);
+
         TimeRange timeRange = new TimeRange(startTime, endTime);
 
-        assertThrows(InvalidSlotTimeRange.class, () -> timeRange.validateNewTimeRangeNotInThePast(LocalDateTime.now()));
+        assertThrows(InvalidSlotTimeRange.class, () -> timeRange.validateNewTimeRangeNotInThePast(now));
     }
 }

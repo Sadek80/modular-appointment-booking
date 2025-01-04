@@ -105,7 +105,7 @@ class SlotTest {
         Slot slot = Slot.create(doctorId, startTime, endTime, 50.0, now);
         slot.reserve();
 
-        assertThrows(InvalidSlotTimeRange.class, () -> {
+        assertThrows(SlotUpdateViolation.class, () -> {
             slot.update(newStartTime, newEndTime, 60.0, now);
         });
     }
