@@ -1,16 +1,18 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.dto;
+package sadek.doctorAppointments.doctorAvailability.publicAPI;
 
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record SlotDto(UUID slotId,
-                      UUID doctorId,
-                      String doctorName,
-                      LocalDateTime startTime,
-                      LocalDateTime endTime,
-                      Double cost) {
+public record SlotDto(
+        UUID slotId,
+        UUID doctorId,
+        String doctorName,
+        LocalDateTime startTime,
+        LocalDateTime endTime,
+        Double cost
+) {
 
     public static SlotDto fromSlotEntity(SlotEntity slotEntity) {
         if (slotEntity == null) {
@@ -26,5 +28,4 @@ public record SlotDto(UUID slotId,
                 slotEntity.getCost()
         );
     }
-
 }

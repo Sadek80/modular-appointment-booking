@@ -8,13 +8,12 @@ import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.Doc
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
 import sadek.doctorAppointments.shared.domain.doctor.DoctorId;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
-import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
+import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.SlotErrors;
 import sadek.doctorAppointments.doctorAvailability.internal.data.config.DoctorAvailabilityConfig;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.shared.domain.IDateTimeProvider;
 import sadek.doctorAppointments.shared.domain.IEventBus;
 import sadek.doctorAppointments.shared.domain.Response;
@@ -25,7 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SlotService implements IDoctorAvailabilityApi {
+public class SlotService {
     private final DoctorContext doctorContext;
     private final ISlotRepository slotRepository;
     private final IDoctorRepository doctorRepository;
@@ -52,9 +51,9 @@ public class SlotService implements IDoctorAvailabilityApi {
         );
     }
 
-    public Result<Response<List<SlotDto>>> getAllSlots() {
+    public Result<Response<List<SlotResponseDto>>> getAllSlots() {
         List<SlotEntity> slotEntities = slotRepository.findAllByDoctorIdWithDoctor(doctorContext.getUserId());
-        List<SlotDto> slotDtoList = slotMapper.mapToSlotDtoList(slotEntities);
+        List<SlotResponseDto> slotDtoList = slotMapper.mapToSlotResponseDtoList(slotEntities);
 
         return Result.success(
                 Response.create(slotDtoList)
@@ -63,7 +62,8 @@ public class SlotService implements IDoctorAvailabilityApi {
 
     @Transactional(DoctorAvailabilityConfig.TRANSACTION_MANAGER)
     public Result<Void> updateSlot(UUID slotId, CreateSlotDto request) {
-        Slot slot = getSlot(slotId);
+        SlotEntity slotEntity = slotRepository.findSlotBySlotId(slotId).orElse(null);
+        Slot slot = slotMapper.mapToSlot(slotEntity);
 
         if (slot == null) {
             return Result.failure(SlotErrors.notFound);
@@ -77,31 +77,10 @@ public class SlotService implements IDoctorAvailabilityApi {
                     dateTimeProvider.nowDateTime());
         slot.validateNoOverlapWith(existingSlots);
 
-        slotRepository.save(constructSlotEntity(slot));
+        slotRepository.save(updateSlotEntity(slot, slotEntity));
         publishEvents(slot);
 
         return Result.success();
-    }
-
-    @Override
-    public Result<Void> releaseSlot(UUID slotId) {
-        Slot slot = getSlot(slotId);
-
-        if (slot == null) {
-            return Result.failure(SlotErrors.notFound);
-        }
-
-        slot.release();
-
-        slotRepository.save(constructSlotEntity(slot));
-        publishEvents(slot);
-
-        return Result.success();
-    }
-
-    private Slot getSlot(UUID slotId) {
-        SlotEntity slotEntity = slotRepository.findById(slotId).orElse(null);
-        return slotMapper.mapToSlot(slotEntity);
     }
 
     private List<Slot> getDoctorExistingSLots() {
@@ -114,6 +93,10 @@ public class SlotService implements IDoctorAvailabilityApi {
         slotEntity.setDoctor(doctorRepository.getReferenceById(doctorContext.getUserId()));
 
         return slotEntity;
+    }
+
+    private SlotEntity updateSlotEntity(Slot slot, SlotEntity slotEntity) {
+        return slotMapper.mapToSlotEntity(slot, slotEntity);
     }
 
     private void publishEvents(Slot newSlot) {

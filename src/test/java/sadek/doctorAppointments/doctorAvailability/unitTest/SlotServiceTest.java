@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateSlotDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
+import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
@@ -88,12 +88,12 @@ class SlotServiceTest {
     @Test
     void getAllSlots_shouldReturnAllSlots() {
         SlotEntity slotEntity = mock(SlotEntity.class);
-        SlotDto slotDto = mock(SlotDto.class);
+        SlotResponseDto slotDto = mock(SlotResponseDto.class);
 
         when(slotRepository.findAllByDoctorIdWithDoctor(doctorId)).thenReturn(List.of(slotEntity));
-        when(slotMapper.mapToSlotDtoList(anyList())).thenReturn(List.of(slotDto));
+        when(slotMapper.mapToSlotResponseDtoList(anyList())).thenReturn(List.of(slotDto));
 
-        Result<Response<List<SlotDto>>> result = slotService.getAllSlots();
+        Result<Response<List<SlotResponseDto>>> result = slotService.getAllSlots();
 
         assertTrue(result.isSuccess());
         assertEquals(1, result.getValue().getData().size());
@@ -108,9 +108,9 @@ class SlotServiceTest {
         SlotEntity slotEntity = mock(SlotEntity.class);
         DoctorEntity doctorEntity = mock(DoctorEntity.class);
 
-        when(slotRepository.findById(slotId)).thenReturn(Optional.of(slotEntity));
+        when(slotRepository.findSlotBySlotId(slotId)).thenReturn(Optional.of(slotEntity));
         when(slotMapper.mapToSlot(slotEntity)).thenReturn(slot);
-        when(slotMapper.mapToSlotEntity(slot)).thenReturn(slotEntity);
+        when(slotMapper.mapToSlotEntity(slot, slotEntity)).thenReturn(slotEntity);
         when(doctorRepository.getReferenceById(doctorId)).thenReturn(doctorEntity);
 
         SlotUpdatedEvent slotUpdatedEvent = new SlotUpdatedEvent(slotId, request.startTime(), request.endTime(), request.cost());
@@ -119,7 +119,6 @@ class SlotServiceTest {
         Result<Void> result = slotService.updateSlot(slotId, request);
 
         verify(slot).update(request.startTime(), request.endTime(), request.cost(), now);
-        verify(slotEntity).setDoctor(doctorEntity);
         verify(slotRepository).save(slotEntity);
         verify(eventBus).publish(slotUpdatedEvent);
         verify(slot).clearDomainEvents();

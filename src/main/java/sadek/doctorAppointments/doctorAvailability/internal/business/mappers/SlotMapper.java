@@ -1,9 +1,10 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.mappers;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotDto;
+import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
+import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,9 +47,28 @@ public class SlotMapper {
         return slotEntities.stream().map(this::mapToSlot).collect(Collectors.toList());
     }
 
+    public List<SlotResponseDto> mapToSlotResponseDtoList(List<SlotEntity> slotEntities) {
+        return slotEntities.stream()
+                .map(SlotResponseDto::fromSlotEntity)
+                .toList();
+    }
+
     public List<SlotDto> mapToSlotDtoList(List<SlotEntity> slotEntities) {
         return slotEntities.stream()
                 .map(SlotDto::fromSlotEntity)
                 .toList();
+    }
+
+    public SlotEntity mapToSlotEntity(Slot slot, SlotEntity slotEntity) {
+        if (slot == null) {
+            return null;
+        }
+
+        slotEntity.setCost(slot.getCost().value());
+        slotEntity.setReserved(slot.isReserved());
+        slotEntity.setStartTime(slot.getTimeRange().startTime());
+        slotEntity.setEndTime(slot.getTimeRange().endTime());
+
+        return slotEntity;
     }
 }
