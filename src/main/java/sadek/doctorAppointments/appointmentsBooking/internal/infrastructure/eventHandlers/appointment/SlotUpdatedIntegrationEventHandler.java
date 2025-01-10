@@ -2,11 +2,11 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.eve
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.commands.updateAppointment.UpdateAppointmentCommand;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
@@ -28,8 +28,7 @@ public class SlotUpdatedIntegrationEventHandler {
     }
 
     @Async
-    @TransactionalEventListener
-    @Transactional(value = AppointmentBookingConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
+    @EventListener
     public void handle(SlotUpdatedIntegrationEvent event) {
         logger.info("Start Handling SlotUpdatedIntegrationEvent: {}", event);
 

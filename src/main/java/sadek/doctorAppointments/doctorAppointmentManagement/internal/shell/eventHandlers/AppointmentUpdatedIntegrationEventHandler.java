@@ -2,6 +2,7 @@ package sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.even
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,19 +18,18 @@ import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor
-public class AppointmentUpdatedEventHandler {
+public class AppointmentUpdatedIntegrationEventHandler {
     private final IAppointmentService appointmentService;
     private final ILoggerFactory loggerFactory;
     private ILogger logger;
 
     @PostConstruct
     private void initializeLogger() {
-        this.logger = loggerFactory.getLogger(AppointmentUpdatedEventHandler.class);
+        this.logger = loggerFactory.getLogger(AppointmentUpdatedIntegrationEventHandler.class);
     }
 
     @Async
-    @TransactionalEventListener
-    @Transactional(value = DoctorAppointmentManagementConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
+    @EventListener
     public void handle(AppointmentUpdatedIntegrationEvent event) {
         logger.info("Start Handling AppointmentUpdatedEventHandler: {}", event);
 
