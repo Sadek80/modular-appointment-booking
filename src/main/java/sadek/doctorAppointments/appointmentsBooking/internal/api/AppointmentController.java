@@ -45,7 +45,7 @@ public class AppointmentController extends BaseController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/appointments/"
+            value = "/appointments"
     )
     public ResponseEntity<?> getAllAppointments() {
         return handleResult(getAllPatientAppointmentsQueryHandler.handle(new GetAllPatientAppointmentsQuery()), HttpStatus.OK);

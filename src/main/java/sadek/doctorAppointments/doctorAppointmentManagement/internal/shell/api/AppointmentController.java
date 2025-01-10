@@ -16,7 +16,7 @@ public class AppointmentController extends BaseController {
 
     @RequestMapping(
             method = RequestMethod.PUT,
-            value = "/appointments/complete"
+            value = "/doctors/appointments/complete"
     )
     public ResponseEntity<?> complete(@RequestBody CompleteAppointmentDto request) {
         return handleResult(appointmentService.completeAppointment(request), HttpStatus.NO_CONTENT);
@@ -24,7 +24,7 @@ public class AppointmentController extends BaseController {
 
     @RequestMapping(
             method = RequestMethod.PUT,
-            value = "/appointments/cancel"
+            value = "/doctors/appointments/cancel"
     )
     public ResponseEntity<?> cancel(@RequestBody CancelAppointmentDto request) {
         return handleResult(appointmentService.cancelAppointment(request), HttpStatus.NO_CONTENT);
