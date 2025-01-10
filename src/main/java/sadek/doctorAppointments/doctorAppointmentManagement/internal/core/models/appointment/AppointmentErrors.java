@@ -7,4 +7,5 @@ public class AppointmentErrors {
     public static final Error BOOK_TIMING_VIOLATION = Error.failure("Appointment.BookLocked", "Appointment cannot be booked less than 2 hours before its start time");
     public static Error OVERLAPPED = Error.conflict("Appointment.Overlapped", "You had already OVERLAPPED appointments");
     public static Error NOT_FOUND = Error.notFound("Appointment.NotFound", "Cannot Find Appointment");
+    public static Error ALREADY_EXISTS = Error.conflict("Appointment.AlreadyExistS", "Appointment already exists");
 }

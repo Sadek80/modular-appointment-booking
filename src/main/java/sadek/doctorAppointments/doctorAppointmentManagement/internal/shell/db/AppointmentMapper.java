@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db;
 
 
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.dto.AppointmentResponseDto;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto.AppointmentResponseDto;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.entities.AppointmentEntity;
 
 import java.util.List;

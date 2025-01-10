@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.dto;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

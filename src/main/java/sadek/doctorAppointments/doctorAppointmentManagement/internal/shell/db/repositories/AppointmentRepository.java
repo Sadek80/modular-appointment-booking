@@ -2,7 +2,7 @@ package sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.r
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.dto.AppointmentResponseDto;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto.AppointmentResponseDto;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment.Appointment;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.AppointmentMapper;
