@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAppointmentManagement.core.models.appointment;
 
 import lombok.Getter;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.DoctorId;
+import sadek.doctorAppointments.doctorAppointmentManagement.core.models.doctor.DoctorId;
 import sadek.doctorAppointments.doctorAppointmentManagement.core.models.patient.Patient;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
