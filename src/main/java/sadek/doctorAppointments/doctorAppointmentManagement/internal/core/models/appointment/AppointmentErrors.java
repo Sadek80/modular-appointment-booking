@@ -3,9 +3,8 @@ package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.model
 import sadek.doctorAppointments.shared.domain.Error;
 
 public class AppointmentErrors {
-    public static final Error TIME_DUE = Error.failure("Appointment.TimeDue", "Appointment time has passed");
-    public static final Error BOOK_TIMING_VIOLATION = Error.failure("Appointment.BookLocked", "Appointment cannot be booked less than 2 hours before its start time");
-    public static Error OVERLAPPED = Error.conflict("Appointment.Overlapped", "You had already OVERLAPPED appointments");
+    public static final Error UPDATE_LOCKED = Error.failure("Appointment.UpdateLocked", "Appointment cannot be updated at this time.");
+    public static final Error UPDATE_STAGE_VIOLATION = Error.failure("Appointment.UpdateStageViolation", "Appointment cannot be updated at this stage");
     public static Error NOT_FOUND = Error.notFound("Appointment.NotFound", "Cannot Find Appointment");
     public static Error ALREADY_EXISTS = Error.conflict("Appointment.AlreadyExistS", "Appointment already exists");
 }

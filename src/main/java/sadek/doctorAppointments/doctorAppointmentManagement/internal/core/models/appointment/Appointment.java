@@ -1,6 +1,9 @@
 package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment;
 
 import lombok.Getter;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.events.AppointmentCanceledDomainEvent;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.exceptions.AppointmentUpdateStageViolation;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.exceptions.AppointmentUpdateTimeViolation;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor.DoctorId;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.patient.Patient;
 import sadek.doctorAppointments.shared.domain.Entity;
@@ -48,5 +51,48 @@ public class Appointment extends Entity<AppointmentId> {
     public void update(LocalDateTime startTime, LocalDateTime endTime, double cost) {
         this.timeRange = new TimeRange(startTime, endTime);
         this.cost = new Cost(cost);
+    }
+
+    public void cancel(LocalDateTime now){
+        if (isBookingCompleted()){
+            throw new AppointmentUpdateStageViolation("Appointment Cannot be canceled at this stage!", AppointmentErrors.UPDATE_STAGE_VIOLATION);
+        }
+
+        validateAppointmentUpdateEligibility(now);
+
+        this.status = AppointmentStatus.CANCELLED;
+        this.canceledAt = now;
+
+        raiseDomainEvent(new AppointmentCanceledDomainEvent(
+                this.getId().value(),
+                this.canceledAt
+        ));
+    }
+
+    public void complete(LocalDateTime now){
+        if (isBookingCanceled()){
+            throw new AppointmentUpdateStageViolation("Appointment Cannot be completed at this stage!", AppointmentErrors.UPDATE_STAGE_VIOLATION);
+        }
+
+        this.status = AppointmentStatus.COMPLETED;
+        this.completedAt = now;
+    }
+
+    private boolean isBookingCanceled() {
+        return status == AppointmentStatus.CANCELLED;
+    }
+
+    private boolean isBookingCompleted() {
+        return status == AppointmentStatus.COMPLETED;
+    }
+
+    private void validateAppointmentUpdateEligibility(LocalDateTime now) {
+        if (isViolateUpdateHourWindow(now)) {
+            throw new AppointmentUpdateTimeViolation(AppointmentErrors.UPDATE_LOCKED);
+        }
+    }
+
+    private boolean isViolateUpdateHourWindow(LocalDateTime now) {
+        return now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_APPOINTMENT_ACTIONS));
     }
 }
