@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config;
+package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

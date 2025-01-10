@@ -9,7 +9,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.services.AppointmentOverlappingService;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;

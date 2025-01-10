@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config;
+package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config;
 
 public class AppointmentBookingConfig {
     public static final String DATA_SOURCE = "appointmentBookingDataSource";

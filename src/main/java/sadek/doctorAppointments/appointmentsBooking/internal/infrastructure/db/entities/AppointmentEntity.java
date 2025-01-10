@@ -7,9 +7,8 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.SlotId;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.Doctor;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.DoctorId;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
 

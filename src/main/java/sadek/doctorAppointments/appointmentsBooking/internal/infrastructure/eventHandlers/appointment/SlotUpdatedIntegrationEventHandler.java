@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.commands.updateAppointment.UpdateAppointmentCommand;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;

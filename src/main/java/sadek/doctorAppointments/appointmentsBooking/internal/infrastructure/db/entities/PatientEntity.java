@@ -3,8 +3,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.
 import jakarta.persistence.*;
 import lombok.*;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 
 import java.util.ArrayList;
 import java.util.List;
