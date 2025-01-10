@@ -3,11 +3,11 @@ package sadek.doctorAppointments.doctorAvailability.unitTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
-import sadek.doctorAppointments.shared.domain.exceptions.InvalidCost;
-import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRange;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidCostException;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRangeException;
 import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotRuleViolation;
-import sadek.doctorAppointments.shared.domain.doctor.DoctorId;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
 import sadek.doctorAppointments.shared.domain.IDomainEvent;
 
 import java.time.LocalDateTime;
@@ -57,7 +57,7 @@ class SlotTest {
     void create_slotTimeInThePast_shouldThrowInvalidSlotTimeRange() {
         LocalDateTime pastStartTime = now.minusDays(1);
 
-        assertThrows(InvalidTimeRange.class, () -> {
+        assertThrows(InvalidTimeRangeException.class, () -> {
             Slot.create(doctorId, pastStartTime, pastStartTime.plusHours(1), 50.0, now);
         });
     }
@@ -66,7 +66,7 @@ class SlotTest {
     void create_invalidCost_shouldThrowInvalidSlotCost() {
         double invalidCost = 0.0;
 
-        assertThrows(InvalidCost.class, () -> {
+        assertThrows(InvalidCostException.class, () -> {
             Slot.create(doctorId, startTime, endTime, invalidCost, now);
         });
     }
@@ -90,7 +90,7 @@ class SlotTest {
         LocalDateTime twoHoursBeforeStart = startTime.minusHours(1);
 
         Slot slot = Slot.create(doctorId, startTime, endTime, 50.0, now);
-        slot.reserve();
+        slot.reserve(now);
 
         assertThrows(SlotRuleViolation.class, () -> {
             slot.update(startTime.plusHours(1), startTime.plusHours(3), 60.0, twoHoursBeforeStart);
@@ -103,7 +103,7 @@ class SlotTest {
         LocalDateTime newEndTime = newStartTime.plusHours(2);
 
         Slot slot = Slot.create(doctorId, startTime, endTime, 50.0, now);
-        slot.reserve();
+        slot.reserve(now);
 
         assertThrows(SlotRuleViolation.class, () -> {
             slot.update(newStartTime, newEndTime, 60.0, now);

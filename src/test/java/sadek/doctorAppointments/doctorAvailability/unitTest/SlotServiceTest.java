@@ -7,10 +7,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateSlotDto;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
+import sadek.doctorAppointments.doctorAvailability.internal.business.authentication.DoctorContext;
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.SlotErrors;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
 import sadek.doctorAppointments.doctorAvailability.internal.business.services.SlotService;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.DoctorEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
@@ -138,7 +138,7 @@ class SlotServiceTest {
         verify(slotRepository, never()).save(any());
         verify(eventBus, never()).publish(any());
         assertFalse(result.isSuccess());
-        assertEquals(SlotErrors.notFound, result.getError());
+        assertEquals(SlotErrors.NOT_FOUND, result.getError());
     }
 }
 

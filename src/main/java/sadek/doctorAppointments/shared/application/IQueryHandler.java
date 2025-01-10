@@ -1,5 +1,5 @@
 package sadek.doctorAppointments.shared.application;
 
-public interface IQueryHandler<Query, TResult> {
-    TResult handle(ICommand command);
+public interface IQueryHandler<IQuery, TResult> {
+    TResult handle(IQuery query);
 }

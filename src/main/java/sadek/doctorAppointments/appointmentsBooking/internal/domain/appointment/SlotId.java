@@ -12,4 +12,8 @@ public record SlotId(UUID value) implements IValueObject {
     public static SlotId fromString(String slotId) {
         return new SlotId(UUID.fromString(slotId));
     }
+
+    public static SlotId from(UUID slotId) {
+        return new SlotId(slotId);
+    }
 }

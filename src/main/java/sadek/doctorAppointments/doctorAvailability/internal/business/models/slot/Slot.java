@@ -1,10 +1,9 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.models;
+package sadek.doctorAppointments.doctorAvailability.internal.business.models.slot;
 
 import lombok.Getter;
 import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
-import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRange;
 import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotRuleViolation;
-import sadek.doctorAppointments.shared.domain.doctor.DoctorId;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
@@ -31,11 +30,12 @@ public class Slot extends Entity<SlotId> {
         this.isReserved = false;
     }
 
-    public Slot(UUID id, UUID doctorId, LocalDateTime startTime, LocalDateTime endTime, Double cost) {
+    public Slot(UUID id, UUID doctorId, LocalDateTime startTime, LocalDateTime endTime, Double cost, Boolean isReserved) {
         this.setId(new SlotId(id));
         this.doctorId = new DoctorId(doctorId);
         this.timeRange = new TimeRange(startTime, endTime);
         this.cost = new Cost(cost);
+        this.isReserved = isReserved;
     }
 
     public static Slot create(DoctorId doctorId,
@@ -73,8 +73,15 @@ public class Slot extends Entity<SlotId> {
                                               this.cost.value()));
     }
 
-    public void reserve(){
-        //TODO Write Logic and validation if any
+    public void reserve(LocalDateTime now){
+        if (this.isReserved) {
+            throw new SlotRuleViolation(SlotErrors.ALREADY_RESERVED);
+        }
+
+        if (now.isAfter(this.timeRange.startTime())){
+            throw new SlotRuleViolation(SlotErrors.TIME_DUE);
+        }
+
         this.isReserved = true;
     }
 
@@ -84,23 +91,27 @@ public class Slot extends Entity<SlotId> {
     }
 
     private void validateSlotUpdateEligibility(LocalDateTime now) {
-        if (this.isReserved && now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_SLOT_UPDATE))) {
-            throw new SlotRuleViolation(SlotErrors.updateTimeViolated);
+        if (this.isReserved && isViolateUpdateHourWindow(now)) {
+            throw new SlotRuleViolation(SlotErrors.UPDATE_TIME_VIOLATED);
         }
     }
 
+    private boolean isViolateUpdateHourWindow(LocalDateTime now) {
+        return now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_SLOT_UPDATE));
+    }
+
     private void validateTimeRangeUpdate(TimeRange newTimeRange, LocalDateTime now) {
-        timeRange.validateNewTimeRangeNotInThePast(now);
+        newTimeRange.validateNewTimeRangeNotInThePast(now);
         validateTimeRangeDuration(newTimeRange);
 
         if (this.isReserved && !this.timeRange.isSameDayWith(newTimeRange)){
-            throw new SlotRuleViolation(SlotErrors.updateDateViolated);
+            throw new SlotRuleViolation(SlotErrors.UPDATE_DATE_VIOLATED);
         }
     }
 
     private static void validateTimeRangeDuration(TimeRange timeRange) {
         if (timeRange.durationInHours() > MAX_SLOT_HOURS_DURATION) {
-            throw new SlotRuleViolation(SlotErrors.durationExceeded);
+            throw new SlotRuleViolation(SlotErrors.DURATION_EXCEEDED);
         }
     }
 
@@ -110,7 +121,7 @@ public class Slot extends Entity<SlotId> {
                 .anyMatch(existingSlot -> existingSlot.getTimeRange().overlapsWith(this.timeRange));
 
         if (hasOverlap) {
-            throw new SlotRuleViolation(SlotErrors.overlapped);
+            throw new SlotRuleViolation(SlotErrors.OVERLAPPED);
         }
     }
 }

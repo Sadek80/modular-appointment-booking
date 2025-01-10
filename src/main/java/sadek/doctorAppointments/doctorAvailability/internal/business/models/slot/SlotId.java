@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAvailability.internal.business.models;
+package sadek.doctorAppointments.doctorAvailability.internal.business.models.slot;
 
 import sadek.doctorAppointments.shared.domain.IValueObject;
 

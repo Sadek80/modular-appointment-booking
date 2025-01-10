@@ -30,4 +30,12 @@ public interface ISlotRepository extends JpaRepository<SlotEntity, UUID>{
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<SlotEntity> findSlotBySlotId(UUID slotId);
+
+    @Query("""
+        SELECT s
+        FROM SlotEntity s
+        JOIN FETCH s.doctor
+        WHERE s.isReserved = false AND s.slotId = :slotId
+    """)
+    Optional<SlotEntity> findActiveSlotBySlotId(UUID slotId);
 }

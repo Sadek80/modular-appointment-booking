@@ -2,7 +2,7 @@ package sadek.doctorAppointments.doctorAvailability.internal.business.mappers;
 
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 
@@ -36,7 +36,9 @@ public class SlotMapper {
                         slotEntity.getDoctorId(),
                         slotEntity.getStartTime(),
                         slotEntity.getEndTime(),
-                        slotEntity.getCost());
+                        slotEntity.getCost(),
+                        slotEntity.isReserved()
+                );
     }
 
     public List<SlotEntity> mapToSlotEntityList(List<Slot> slots) {

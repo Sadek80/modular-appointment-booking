@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.CreateSlotDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.helpers.DoctorContext;
+import sadek.doctorAppointments.doctorAvailability.internal.business.authentication.DoctorContext;
 import sadek.doctorAppointments.doctorAvailability.internal.business.mappers.SlotMapper;
-import sadek.doctorAppointments.shared.domain.doctor.DoctorId;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.Slot;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
 import sadek.doctorAppointments.doctorAvailability.internal.business.dto.SlotResponseDto;
-import sadek.doctorAppointments.doctorAvailability.internal.business.models.SlotErrors;
+import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.SlotErrors;
 import sadek.doctorAppointments.doctorAvailability.internal.data.config.DoctorAvailabilityConfig;
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
@@ -66,7 +66,7 @@ public class SlotService {
         Slot slot = slotMapper.mapToSlot(slotEntity);
 
         if (slot == null) {
-            return Result.failure(SlotErrors.notFound);
+            return Result.failure(SlotErrors.NOT_FOUND);
         }
 
         List<Slot> existingSlots = getDoctorExistingSLots();
