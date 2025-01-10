@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentNotFoundException;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.commands.updateAppointment.UpdateAppointmentCommand;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
+import sadek.doctorAppointments.shared.application.ICommandHandler;
+import sadek.doctorAppointments.shared.domain.Result;
 import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
 import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class SlotUpdatedIntegrationEventHandler {
-    private final IAppointmentRepository appointmentRepository;
+    private final ICommandHandler<UpdateAppointmentCommand, Result<Void>> updateAppointmentCommandHandler;
     private final ILoggerFactory loggerFactory;
     private ILogger logger;
 
@@ -33,16 +33,23 @@ public class SlotUpdatedIntegrationEventHandler {
     public void handle(SlotUpdatedIntegrationEvent event) {
         logger.info("Start Handling SlotUpdatedIntegrationEvent: {}", event);
 
-        Appointment appointment = appointmentRepository.findBySlotId(event.slotId());
+        UpdateAppointmentCommand command = new UpdateAppointmentCommand(
+          event.slotId(),
+          event.startTime(),
+          event.endTime(),
+          event.cost()
+        );
 
-        if (appointment == null) {
-            logger.error("Slot {} not found", event.slotId());
-            throw new AppointmentNotFoundException();
+        try {
+            Result<Void> result = updateAppointmentCommandHandler.handle(command);
+
+            if (result.isFailure()){
+                logger.error("Error handling SlotUpdatedIntegrationEvent: {}", result.getError());
+            }
         }
-
-        appointment.update(event.startTime(), event.endTime(), event.cost());
-
-        appointmentRepository.save(appointment);
+        catch (Exception e) {
+            logger.error("Error handling SlotUpdatedIntegrationEvent: {}", event, e);
+        }
 
         logger.info("SlotUpdatedIntegrationEvent successfully handled");
     }
