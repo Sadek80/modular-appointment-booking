@@ -94,6 +94,7 @@ public class Appointment extends Entity<AppointmentId> {
         this.cost = new Cost(cost);
 
         raiseDomainEvent(new AppointmentUpdatedDomainEvent(
+                this.getId().value(),
                 startTime,
                 endTime,
                 cost

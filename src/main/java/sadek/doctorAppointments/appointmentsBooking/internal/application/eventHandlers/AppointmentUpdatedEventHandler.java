@@ -11,7 +11,7 @@ import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
 import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
 import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
-@Component
+@Component("DoctorAppointmentManagement-AppointmentUpdatedEventHandler")
 @RequiredArgsConstructor
 public class AppointmentUpdatedEventHandler {
     private final IEventBus eventBus;
@@ -29,6 +29,7 @@ public class AppointmentUpdatedEventHandler {
         logger.info("Starting handle of AppointmentUpdatedDomainEvent: {}", event);
 
         eventBus.publishIntegrationEvent(new AppointmentUpdatedIntegrationEvent(
+                event.appointmentId(),
                 event.startTime(),
                 event.endTime(),
                 event.cost()

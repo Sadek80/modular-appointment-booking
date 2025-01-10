@@ -11,7 +11,7 @@ import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
 import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
 import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
-@Component
+@Component("DoctorAppointmentManagement-AppointmentCreatedEventHandler")
 @RequiredArgsConstructor
 public class AppointmentCreatedEventHandler {
     private final IEventBus eventBus;
