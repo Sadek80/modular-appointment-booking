@@ -1,7 +1,6 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.eventHandlers.appointment;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,23 +11,24 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentNotFoundException;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
+import sadek.doctorAppointments.shared.domain.ILogger;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class SlotUpdatedIntegrationEventHandler {
     private final IAppointmentRepository appointmentRepository;
+    private final ILogger logger;
 
     @Async
     @TransactionalEventListener
     @Transactional(value = AppointmentBookingConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
     public void handle(SlotUpdatedIntegrationEvent event) {
-        log.info("Start Handling SlotUpdatedIntegrationEvent: {}", event);
+        logger.info("Start Handling SlotUpdatedIntegrationEvent: {}", event);
 
         Appointment appointment = appointmentRepository.findBySlotId(event.slotId());
 
         if (appointment == null) {
-            log.error("Slot {} not found", event.slotId());
+            logger.error("Slot {} not found", event.slotId());
             throw new AppointmentNotFoundException();
         }
 
@@ -36,6 +36,6 @@ public class SlotUpdatedIntegrationEventHandler {
 
         appointmentRepository.save(appointment);
 
-        log.info("SlotUpdatedIntegrationEvent successfully handled");
+        logger.info("SlotUpdatedIntegrationEvent successfully handled");
     }
 }

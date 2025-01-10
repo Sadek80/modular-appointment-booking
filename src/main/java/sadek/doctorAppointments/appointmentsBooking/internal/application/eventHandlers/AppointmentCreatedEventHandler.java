@@ -2,6 +2,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.application.eventH
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentCreatedDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.publicAPI.events.AppointmentCreatedIntegrationEvent;
@@ -14,6 +15,7 @@ public class AppointmentCreatedEventHandler {
     private final ILogger logger;
     private final IEventBus eventBus;
 
+    @Async
     @EventListener
     public void handle(AppointmentCreatedDomainEvent event) {
         logger.info("Starting handle of AppointmentCreatedDomainEvent: {}", event);
