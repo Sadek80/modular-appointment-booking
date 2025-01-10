@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAvailability.unitTest;
 
 import org.junit.jupiter.api.Test;
-import sadek.doctorAppointments.shared.domain.exceptions.InvalidCost;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidCostException;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,14 +21,14 @@ public class SlotCostTest {
     void constructor_zeroSlotCost_shouldThrowInvalidSlotCost() {
         double zeroCost = 0.0;
 
-        assertThrows(InvalidCost.class, () -> new Cost(zeroCost));
+        assertThrows(InvalidCostException.class, () -> new Cost(zeroCost));
     }
 
     @Test
     void constructor_negativeSlotCost_shouldThrowInvalidSlotCost() {
         double negativeCost = -10.0;
 
-        assertThrows(InvalidCost.class, () -> new Cost(negativeCost));
+        assertThrows(InvalidCostException.class, () -> new Cost(negativeCost));
     }
 
     @Test

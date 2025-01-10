@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.shared.domain.valueObject;
 
-import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRange;
+import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRangeException;
 import sadek.doctorAppointments.shared.domain.IValueObject;
 
 import java.time.Duration;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public record TimeRange(LocalDateTime startTime, LocalDateTime endTime) implements IValueObject {
     public TimeRange {
         if (startTime.isAfter(endTime) || isNotSameDay(startTime, endTime)) {
-            throw new InvalidTimeRange(TimeRangeErrors.invalidTimeRange);
+            throw new InvalidTimeRangeException(TimeRangeErrors.INVALID_TIME_RANGE);
         }
     }
 
@@ -31,7 +31,7 @@ public record TimeRange(LocalDateTime startTime, LocalDateTime endTime) implemen
 
     public void validateNewTimeRangeNotInThePast(LocalDateTime now) {
         if (startTime.isBefore(now) || endTime.isBefore(now)) {
-            throw new InvalidTimeRange(TimeRangeErrors.pastTimeRange);
+            throw new InvalidTimeRangeException(TimeRangeErrors.PAST_TIME_RANGE);
         }
     }
 }

@@ -3,20 +3,20 @@ package sadek.doctorAppointments.shared.domain.exceptions;
 import sadek.doctorAppointments.shared.application.exceptions.DomainException;
 import sadek.doctorAppointments.shared.domain.Error;
 
-public class InvalidTimeRange extends DomainException {
-    public InvalidTimeRange() {
+public class InvalidCostException extends DomainException {
+    public InvalidCostException() {
         super("", Error.NONE);
     }
 
-    public InvalidTimeRange(String message) {
+    public InvalidCostException(String message) {
         super(message, Error.NONE);
     }
 
-    public InvalidTimeRange(String message, Error error) {
+    public InvalidCostException(String message, Error error) {
         super(message, error);
     }
 
-    public InvalidTimeRange(Error error) {
+    public InvalidCostException(Error error) {
         super("", error);
     }
 }
