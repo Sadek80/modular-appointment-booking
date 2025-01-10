@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.core.models.patient;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.patient;
 
 import lombok.Getter;
 import sadek.doctorAppointments.shared.domain.Entity;

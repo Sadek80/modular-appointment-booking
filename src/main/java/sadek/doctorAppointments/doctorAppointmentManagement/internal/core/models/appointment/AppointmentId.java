@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.core.models.appointment;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment;
 
 import java.util.UUID;
 

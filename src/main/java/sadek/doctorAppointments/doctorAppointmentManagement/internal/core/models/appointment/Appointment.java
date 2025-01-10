@@ -1,8 +1,8 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.core.models.appointment;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment;
 
 import lombok.Getter;
-import sadek.doctorAppointments.doctorAppointmentManagement.core.models.doctor.DoctorId;
-import sadek.doctorAppointments.doctorAppointmentManagement.core.models.patient.Patient;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor.DoctorId;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.patient.Patient;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;

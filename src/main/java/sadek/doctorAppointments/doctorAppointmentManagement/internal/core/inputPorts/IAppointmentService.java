@@ -1,6 +1,6 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.core.inputPorts;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts;
 
-import sadek.doctorAppointments.doctorAppointmentManagement.core.dto.AppointmentResponseDto;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.dto.AppointmentResponseDto;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
 

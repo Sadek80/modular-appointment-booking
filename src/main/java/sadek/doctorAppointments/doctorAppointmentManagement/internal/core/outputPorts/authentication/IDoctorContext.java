@@ -1,7 +1,7 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.core.outputPorts.authentication;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.authentication;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.doctorAppointmentManagement.core.models.doctor.Doctor;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor.Doctor;
 import sadek.doctorAppointments.shared.application.IUserContext;
 
 import java.util.UUID;
