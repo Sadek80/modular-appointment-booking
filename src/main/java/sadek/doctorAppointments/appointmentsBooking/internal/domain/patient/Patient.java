@@ -1,13 +1,16 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.domain.patient;
 
+import lombok.Getter;
 import sadek.doctorAppointments.shared.domain.Entity;
+import sadek.doctorAppointments.shared.domain.valueObject.Name;
 
+@Getter
 public class Patient extends Entity<PatientId> {
-    private final String name;
+    private final Name name;
 
     private Patient(PatientId patientId, String name) {
         setId(patientId);
-        this.name = name;
+        this.name = Name.of(name);
     }
 
     public static Patient create (String name){

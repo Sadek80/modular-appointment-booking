@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment;
 
 public enum AppointmentStatus {
-    RESERVED,
+    BOOKED,
     COMPLETED,
     CANCELLED
 }
