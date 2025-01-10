@@ -49,12 +49,17 @@ public class Appointment extends Entity<AppointmentId> {
     }
 
     public void update(LocalDateTime startTime, LocalDateTime endTime, double cost) {
+        if (isAppointmentCanceled() || isAppointmentCompleted()){
+            throw new AppointmentUpdateStageViolation("Appointment Cannot be updated at this stage!",
+                    AppointmentErrors.UPDATE_STAGE_VIOLATION);
+        }
+
         this.timeRange = new TimeRange(startTime, endTime);
         this.cost = new Cost(cost);
     }
 
     public void cancel(LocalDateTime now){
-        if (isBookingCompleted()){
+        if (isAppointmentCompleted()){
             throw new AppointmentUpdateStageViolation("Appointment Cannot be canceled at this stage!", AppointmentErrors.UPDATE_STAGE_VIOLATION);
         }
 
@@ -70,19 +75,29 @@ public class Appointment extends Entity<AppointmentId> {
     }
 
     public void complete(LocalDateTime now){
-        if (isBookingCanceled()){
-            throw new AppointmentUpdateStageViolation("Appointment Cannot be completed at this stage!", AppointmentErrors.UPDATE_STAGE_VIOLATION);
+        if (isAppointmentCanceled()){
+            throw new AppointmentUpdateStageViolation("Appointment Cannot be completed at this stage!",
+                    AppointmentErrors.UPDATE_STAGE_VIOLATION);
+        }
+
+        if (!isAppointmentFinished(now)){
+            throw new AppointmentUpdateTimeViolation("Appointment can only be completed after it is finished",
+                    AppointmentErrors.UPDATE_LOCKED);
         }
 
         this.status = AppointmentStatus.COMPLETED;
         this.completedAt = now;
     }
 
-    private boolean isBookingCanceled() {
+    private boolean isAppointmentFinished(LocalDateTime now) {
+        return now.isAfter(this.timeRange.endTime());
+    }
+
+    private boolean isAppointmentCanceled() {
         return status == AppointmentStatus.CANCELLED;
     }
 
-    private boolean isBookingCompleted() {
+    private boolean isAppointmentCompleted() {
         return status == AppointmentStatus.COMPLETED;
     }
 
