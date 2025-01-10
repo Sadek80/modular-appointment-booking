@@ -1,0 +1,1 @@
+CREATE SCHEMA IF NOT EXISTS appointment_booking;
