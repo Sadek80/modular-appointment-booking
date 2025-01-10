@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.appointmentsBooking.publicAPI.events;
 
-import sadek.doctorAppointments.shared.domain.IIntegrationEvent;
+import sadek.doctorAppointments.shared.domain.abstractions.IIntegrationEvent;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

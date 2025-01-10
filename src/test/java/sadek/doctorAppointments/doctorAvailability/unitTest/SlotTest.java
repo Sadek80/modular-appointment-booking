@@ -8,7 +8,7 @@ import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRangeExcepti
 import sadek.doctorAppointments.doctorAvailability.internal.business.exceptions.SlotRuleViolation;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.doctor.DoctorId;
 import sadek.doctorAppointments.doctorAvailability.internal.business.models.slot.Slot;
-import sadek.doctorAppointments.shared.domain.IDomainEvent;
+import sadek.doctorAppointments.shared.domain.abstractions.IDomainEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;

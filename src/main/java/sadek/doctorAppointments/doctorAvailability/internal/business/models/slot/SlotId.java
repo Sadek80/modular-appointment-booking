@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.models.slot;
 
-import sadek.doctorAppointments.shared.domain.IValueObject;
+import sadek.doctorAppointments.shared.domain.abstractions.IValueObject;
 
 import java.util.UUID;
 

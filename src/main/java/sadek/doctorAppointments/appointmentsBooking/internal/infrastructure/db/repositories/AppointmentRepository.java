@@ -8,7 +8,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.AppointmentMapper;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.entities.AppointmentEntity;
-import sadek.doctorAppointments.shared.domain.IEventBus;
+import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
 
 import java.time.LocalDateTime;
 import java.util.List;

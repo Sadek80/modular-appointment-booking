@@ -12,8 +12,8 @@ import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEn
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
-import sadek.doctorAppointments.shared.domain.IDateTimeProvider;
-import sadek.doctorAppointments.shared.domain.IEventBus;
+import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
+import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
 import sadek.doctorAppointments.shared.domain.Result;
 
 import java.util.List;

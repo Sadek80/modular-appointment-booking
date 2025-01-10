@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.shared.domain;
+package sadek.doctorAppointments.shared.domain.abstractions;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

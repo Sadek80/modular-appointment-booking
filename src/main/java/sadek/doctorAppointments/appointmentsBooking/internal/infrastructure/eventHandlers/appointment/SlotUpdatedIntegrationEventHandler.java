@@ -1,5 +1,6 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.eventHandlers.appointment;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,20 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentNotFoundException;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
-import sadek.doctorAppointments.shared.domain.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class SlotUpdatedIntegrationEventHandler {
     private final IAppointmentRepository appointmentRepository;
-    private final ILogger logger;
+    private final ILoggerFactory loggerFactory;
+    private ILogger logger;
+
+    @PostConstruct
+    private void initializeLogger() {
+        this.logger = loggerFactory.getLogger(SlotUpdatedIntegrationEventHandler.class);
+    }
 
     @Async
     @TransactionalEventListener

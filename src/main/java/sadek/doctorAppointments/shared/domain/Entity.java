@@ -2,6 +2,7 @@ package sadek.doctorAppointments.shared.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import sadek.doctorAppointments.shared.domain.abstractions.IDomainEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.shared.domain.valueObject;
 
 import sadek.doctorAppointments.shared.domain.exceptions.InvalidTimeRangeException;
-import sadek.doctorAppointments.shared.domain.IValueObject;
+import sadek.doctorAppointments.shared.domain.abstractions.IValueObject;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

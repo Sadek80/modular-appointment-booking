@@ -1,5 +1,6 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.application.commands.bookAppointment;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,10 +13,11 @@ import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.conf
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
-import sadek.doctorAppointments.shared.domain.IDateTimeProvider;
-import sadek.doctorAppointments.shared.domain.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
+import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
+import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
 
 import java.util.UUID;
@@ -28,7 +30,13 @@ public class BookAppointmentCommandHandler implements ICommandHandler<BookAppoin
     private final IPatientContext patientContext;
     private final IDateTimeProvider dateTimeProvider;
     private final AppointmentOverlappingService appointmentOverlappingService;
-    private final ILogger logger;
+    private final ILoggerFactory loggerFactory;
+    private ILogger logger;
+
+    @PostConstruct
+    private void initializeLogger() {
+        this.logger = loggerFactory.getLogger(BookAppointmentCommandHandler.class);
+    }
 
     @Override
     @Transactional(value = AppointmentBookingConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)

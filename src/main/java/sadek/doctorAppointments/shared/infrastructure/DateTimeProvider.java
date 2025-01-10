@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.shared.infrastructure;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.shared.domain.IDateTimeProvider;
+import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

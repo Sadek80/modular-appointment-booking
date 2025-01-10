@@ -1,19 +1,25 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.events;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
-import sadek.doctorAppointments.shared.domain.IEventBus;
-import sadek.doctorAppointments.shared.domain.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
+import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class SlotUpdatedEventHandler {
     private final IEventBus eventBus;
-    private final ILogger logger;
+    private final ILoggerFactory loggerFactory;
+    private ILogger logger;
 
+    @PostConstruct
+    private void initializeLogger() {
+        this.logger = loggerFactory.getLogger(SlotUpdatedEventHandler.class);
+    }
 
     @EventListener
     public void handle(SlotUpdatedEvent event) {

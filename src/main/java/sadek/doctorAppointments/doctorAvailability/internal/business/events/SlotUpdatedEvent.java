@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.doctorAvailability.internal.business.events;
 
-import sadek.doctorAppointments.shared.domain.IDomainEvent;
+import sadek.doctorAppointments.shared.domain.abstractions.IDomainEvent;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -18,6 +18,8 @@ import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ID
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.business.events.SlotUpdatedEvent;
 import sadek.doctorAppointments.shared.domain.*;
+import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
+import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

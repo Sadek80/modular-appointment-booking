@@ -1,19 +1,27 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.application.eventHandlers;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentUpdatedDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.publicAPI.events.AppointmentUpdatedIntegrationEvent;
-import sadek.doctorAppointments.shared.domain.IEventBus;
-import sadek.doctorAppointments.shared.domain.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
+import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
+import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
 
 @Component
 @RequiredArgsConstructor
 public class AppointmentUpdatedEventHandler {
-    private final ILogger logger;
     private final IEventBus eventBus;
+    private final ILoggerFactory loggerFactory;
+    private ILogger logger;
+
+    @PostConstruct
+    private void initializeLogger() {
+        this.logger = loggerFactory.getLogger(AppointmentUpdatedEventHandler.class);
+    }
 
     @Async
     @EventListener

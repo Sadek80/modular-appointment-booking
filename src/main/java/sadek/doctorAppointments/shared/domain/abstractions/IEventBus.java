@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.shared.domain;
+package sadek.doctorAppointments.shared.domain.abstractions;
 
 public interface IEventBus {
     void publish(IDomainEvent domainEvent);
