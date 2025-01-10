@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public record AppointmentCreatedIntegrationEvent(
         UUID appointmentId,
-        UUID slotId,
         LocalDateTime startTime,
         LocalDateTime endTime,
         Double cost,

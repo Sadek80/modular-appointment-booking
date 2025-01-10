@@ -30,7 +30,6 @@ public class AppointmentCreatedEventHandler {
 
         eventBus.publishIntegrationEvent(new AppointmentCreatedIntegrationEvent(
                 event.appointmentId(),
-                event.slotId(),
                 event.startTime(),
                 event.endTime(),
                 event.cost(),
