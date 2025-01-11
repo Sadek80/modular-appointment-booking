@@ -12,9 +12,9 @@ import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.c
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.IDateTimeProvider;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor

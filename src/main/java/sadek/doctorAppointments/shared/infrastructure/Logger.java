@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.shared.infrastructure;
 
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
+import sadek.doctorAppointments.shared.application.ILogger;
 
 public class Logger implements ILogger {
     private final org.slf4j.Logger logger;

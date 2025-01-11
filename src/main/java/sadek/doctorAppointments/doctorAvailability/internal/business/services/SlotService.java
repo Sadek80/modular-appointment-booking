@@ -14,8 +14,8 @@ import sadek.doctorAppointments.doctorAvailability.internal.data.config.DoctorAv
 import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEntity;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
-import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
-import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
+import sadek.doctorAppointments.shared.application.IDateTimeProvider;
+import sadek.doctorAppointments.shared.application.IEventBus;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
 

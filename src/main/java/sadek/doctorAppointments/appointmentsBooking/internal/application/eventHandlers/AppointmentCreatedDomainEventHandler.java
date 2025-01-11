@@ -7,20 +7,20 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentCreatedDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.publicAPI.events.AppointmentCreatedIntegrationEvent;
-import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 @Component("DoctorAppointmentManagement-AppointmentCreatedEventHandler")
 @RequiredArgsConstructor
-public class AppointmentCreatedEventHandler {
+public class AppointmentCreatedDomainEventHandler {
     private final IEventBus eventBus;
     private final ILoggerFactory loggerFactory;
     private ILogger logger;
 
     @PostConstruct
     private void initializeLogger() {
-        this.logger = loggerFactory.getLogger(AppointmentCreatedEventHandler.class);
+        this.logger = loggerFactory.getLogger(AppointmentCreatedDomainEventHandler.class);
     }
 
     @Async

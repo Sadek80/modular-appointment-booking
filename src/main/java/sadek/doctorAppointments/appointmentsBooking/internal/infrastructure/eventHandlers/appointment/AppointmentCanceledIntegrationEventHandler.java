@@ -9,8 +9,8 @@ import sadek.doctorAppointments.appointmentsBooking.internal.application.command
 import sadek.doctorAppointments.doctorAppointmentManagement.publicAPI.events.AppointmentCanceledIntegrationEvent;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor

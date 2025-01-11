@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.authentication.IPatientContext;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication.IPatientContext;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.services.AppointmentOverlappingService;
@@ -13,11 +13,11 @@ import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.c
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
-import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
+import sadek.doctorAppointments.shared.application.IDateTimeProvider;
+import sadek.doctorAppointments.shared.application.ILogger;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
 
 import java.util.UUID;

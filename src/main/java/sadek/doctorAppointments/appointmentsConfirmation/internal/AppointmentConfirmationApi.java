@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sadek.doctorAppointments.appointmentsConfirmation.publicAPI.IAppointmentConfirmationApi;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 import java.util.UUID;
 

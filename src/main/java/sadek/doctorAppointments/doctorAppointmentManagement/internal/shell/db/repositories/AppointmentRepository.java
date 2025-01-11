@@ -7,7 +7,7 @@ import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.AppointmentMapper;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.entities.AppointmentEntity;
-import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
+import sadek.doctorAppointments.shared.application.IEventBus;
 
 import java.util.List;
 import java.util.UUID;

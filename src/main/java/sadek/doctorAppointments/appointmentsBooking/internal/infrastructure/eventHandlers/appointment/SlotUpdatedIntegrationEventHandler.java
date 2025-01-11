@@ -5,15 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.commands.updateAppointment.UpdateAppointmentCommand;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.events.SlotUpdatedIntegrationEvent;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor

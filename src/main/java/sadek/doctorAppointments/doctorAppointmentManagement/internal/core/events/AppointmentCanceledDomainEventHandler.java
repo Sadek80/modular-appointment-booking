@@ -6,9 +6,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import sadek.doctorAppointments.doctorAppointmentManagement.publicAPI.events.AppointmentCanceledIntegrationEvent;
-import sadek.doctorAppointments.shared.domain.abstractions.IEventBus;
-import sadek.doctorAppointments.shared.domain.abstractions.ILogger;
-import sadek.doctorAppointments.shared.domain.abstractions.ILoggerFactory;
+import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.ILogger;
+import sadek.doctorAppointments.shared.application.ILoggerFactory;
 
 @Service
 @RequiredArgsConstructor

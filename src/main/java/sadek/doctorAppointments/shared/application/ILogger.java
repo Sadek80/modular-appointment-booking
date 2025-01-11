@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.shared.domain.abstractions;
+package sadek.doctorAppointments.shared.application;
 
 public interface ILogger {
     void trace(String var1);

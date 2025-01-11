@@ -2,7 +2,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.application.querie
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.authentication.IPatientContext;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication.IPatientContext;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.shared.application.IQueryHandler;
 import sadek.doctorAppointments.shared.domain.Response;

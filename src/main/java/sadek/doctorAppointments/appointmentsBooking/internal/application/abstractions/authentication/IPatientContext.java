@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.authentication;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication;
 
 import org.springframework.stereotype.Component;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;

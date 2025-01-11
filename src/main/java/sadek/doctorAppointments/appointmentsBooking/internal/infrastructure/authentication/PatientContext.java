@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.authentication;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.authentication.IPatientContext;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication.IPatientContext;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
 
 import java.util.UUID;

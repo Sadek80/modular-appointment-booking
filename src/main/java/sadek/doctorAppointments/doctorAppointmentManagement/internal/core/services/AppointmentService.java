@@ -13,7 +13,7 @@ import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.output
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.config.DoctorAppointmentManagementConfig;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
-import sadek.doctorAppointments.shared.domain.abstractions.IDateTimeProvider;
+import sadek.doctorAppointments.shared.application.IDateTimeProvider;
 
 import java.util.List;
 
