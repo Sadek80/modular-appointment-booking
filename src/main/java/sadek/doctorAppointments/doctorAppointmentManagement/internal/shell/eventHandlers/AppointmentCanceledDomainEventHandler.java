@@ -1,10 +1,11 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.events;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.eventHandlers;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.events.AppointmentCanceledDomainEvent;
 import sadek.doctorAppointments.doctorAppointmentManagement.publicAPI.events.AppointmentCanceledIntegrationEvent;
 import sadek.doctorAppointments.shared.application.IEventBus;
 import sadek.doctorAppointments.shared.application.ILogger;
