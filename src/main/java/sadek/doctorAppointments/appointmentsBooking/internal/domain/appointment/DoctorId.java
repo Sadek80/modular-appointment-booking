@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor;
+package sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment;
 
 import sadek.doctorAppointments.shared.domain.abstractions.IValueObject;
 

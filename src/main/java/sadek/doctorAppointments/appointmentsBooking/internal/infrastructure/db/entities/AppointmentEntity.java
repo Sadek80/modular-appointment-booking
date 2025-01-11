@@ -6,7 +6,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentId;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.SlotId;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.Doctor;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Doctor;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
@@ -70,8 +70,8 @@ public class AppointmentEntity {
                 .appointmentId(appointment.getId().value())
                 .patientId(appointment.getPatientId().value())
                 .slotId(appointment.getSlotId().value())
-                .doctorId(appointment.getDoctor().getId().value())
-                .doctorName(appointment.getDoctor().getName().value())
+                .doctorId(appointment.getDoctor().doctorId())
+                .doctorName(appointment.getDoctor().name())
                 .startTime(appointment.getTimeRange().startTime())
                 .endTime(appointment.getTimeRange().endTime())
                 .cost(appointment.getCost().value())
@@ -87,7 +87,7 @@ public class AppointmentEntity {
         return new Appointment(
                 AppointmentId.from(this.appointmentId),
                 PatientId.from(this.getPatientId()),
-                Doctor.create(this.getDoctorId().toString(), this.getDoctorName()),
+                Doctor.create(this.getDoctorId(), this.getDoctorName()),
                 SlotId.from(this.getSlotId()),
                 new TimeRange(this.getStartTime(), this.getEndTime()),
                 new Cost(this.getCost()),

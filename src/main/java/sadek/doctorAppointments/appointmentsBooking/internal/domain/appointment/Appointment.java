@@ -6,7 +6,6 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentUpdatedDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentRuleViolation;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.InvalidAppointmentTime;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.Doctor;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
@@ -57,7 +56,7 @@ public class Appointment extends Entity<AppointmentId> {
         validateBookingTimingCompliance(slotInfo, now);
 
         Appointment appointment = new Appointment(patient.getId(),
-                Doctor.create(slotInfo.doctorId().toString(), slotInfo.doctorName()),
+                Doctor.create(slotInfo.doctorId(), slotInfo.doctorName()),
                 SlotId.from(slotInfo.slotId()),
                 new TimeRange(slotInfo.startTime(), slotInfo.endTime()),
                 new Cost(slotInfo.cost()));
@@ -73,7 +72,7 @@ public class Appointment extends Entity<AppointmentId> {
                 appointment.cost.value(),
                 appointment.patientId.value(),
                 patient.getName().value(),
-                appointment.doctor.getId().value(),
+                appointment.doctor.doctorId(),
                 appointment.reservedAt));
 
         return appointment;
