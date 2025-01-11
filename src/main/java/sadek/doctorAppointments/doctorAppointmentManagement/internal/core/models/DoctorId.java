@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models;
 
 import sadek.doctorAppointments.shared.domain.abstractions.IValueObject;
 

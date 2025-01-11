@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models;
 
 import sadek.doctorAppointments.shared.domain.Error;
 

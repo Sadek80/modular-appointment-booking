@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.repositories;
 
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto.AppointmentResponseDto;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment.Appointment;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.Appointment;
 import sadek.doctorAppointments.shared.domain.abstractions.IBaseRepository;
 
 import java.time.LocalDateTime;

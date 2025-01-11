@@ -2,11 +2,11 @@ package sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.e
 
 import jakarta.persistence.*;
 import lombok.*;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment.Appointment;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment.AppointmentId;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment.AppointmentStatus;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor.DoctorId;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.patient.Patient;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.Appointment;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.AppointmentId;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.AppointmentStatus;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.DoctorId;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.Patient;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.config.DoctorAppointmentManagementConfig;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
@@ -61,8 +61,8 @@ public class AppointmentEntity {
         return AppointmentEntity.builder()
                 .appointmentId(appointment.getId().value())
                 .doctorId(appointment.getDoctorId().value())
-                .patientId(appointment.getPatient().getId().value())
-                .patientName(appointment.getPatient().getName().value())
+                .patientId(appointment.getPatient().patientId())
+                .patientName(appointment.getPatient().name())
                 .startTime(appointment.getTimeRange().startTime())
                 .endTime(appointment.getTimeRange().endTime())
                 .cost(appointment.getCost().value())
@@ -77,7 +77,7 @@ public class AppointmentEntity {
 
         return new Appointment(
                 AppointmentId.from(this.appointmentId),
-                Patient.create(this.getPatientId().toString(), this.patientName),
+                Patient.create(this.getPatientId(), this.patientName),
                 DoctorId.from(this.getDoctorId()),
                 new TimeRange(this.getStartTime(), this.getEndTime()),
                 new Cost(this.getCost()),

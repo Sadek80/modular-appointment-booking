@@ -1,11 +1,9 @@
-package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.appointment;
+package sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models;
 
 import lombok.Getter;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.events.AppointmentCanceledDomainEvent;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.exceptions.AppointmentUpdateStageViolation;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.exceptions.AppointmentUpdateTimeViolation;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.doctor.DoctorId;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.patient.Patient;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
@@ -39,7 +37,7 @@ public class Appointment extends Entity<AppointmentId> {
     public static Appointment create(UUID appointmentId, UUID patientId, String patientName, UUID doctorId, LocalDateTime startTime, LocalDateTime endTime, Double cost, LocalDateTime reservedAt){
         return new Appointment(
                 AppointmentId.from(appointmentId),
-                Patient.create(patientId.toString(), patientName),
+                Patient.create(patientId, patientName),
                 DoctorId.from(doctorId),
                 new TimeRange(startTime, endTime),
                 new Cost(cost),
