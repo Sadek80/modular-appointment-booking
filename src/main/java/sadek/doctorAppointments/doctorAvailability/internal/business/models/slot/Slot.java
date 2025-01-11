@@ -67,10 +67,12 @@ public class Slot extends Entity<SlotId> {
         this.cost = new Cost(cost);
         this.timeRange = newTimeRange;
 
-        raiseDomainEvent(new SlotUpdatedEvent(this.getId().value(),
-                                              this.timeRange.startTime(),
-                                              this.timeRange.endTime(),
-                                              this.cost.value()));
+        if (isReserved) {
+            raiseDomainEvent(new SlotUpdatedEvent(this.getId().value(),
+                    this.timeRange.startTime(),
+                    this.timeRange.endTime(),
+                    this.cost.value()));
+        }
     }
 
     public void reserve(LocalDateTime now){

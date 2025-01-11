@@ -10,7 +10,8 @@ public record SlotResponseDto(UUID slotId,
                               String doctorName,
                               LocalDateTime startTime,
                               LocalDateTime endTime,
-                              Double cost) {
+                              Double cost,
+                              boolean isReserved) {
 
     public static SlotResponseDto fromSlotEntity(SlotEntity slotEntity) {
         if (slotEntity == null) {
@@ -23,7 +24,8 @@ public record SlotResponseDto(UUID slotId,
                 slotEntity.getDoctor().getName(),
                 slotEntity.getStartTime(),
                 slotEntity.getEndTime(),
-                slotEntity.getCost()
+                slotEntity.getCost(),
+                slotEntity.isReserved()
         );
     }
 

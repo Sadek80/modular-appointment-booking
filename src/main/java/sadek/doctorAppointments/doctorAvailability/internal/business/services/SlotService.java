@@ -47,7 +47,7 @@ public class SlotService {
         publishEvents(newSlot);
 
         return Result.success(
-                Response.create(newSlot.getDoctorId().value(), "New slot created")
+                Response.create(newSlot.getId().value(), "New slot created")
         );
     }
 
