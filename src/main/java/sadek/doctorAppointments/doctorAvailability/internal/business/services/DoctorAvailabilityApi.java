@@ -28,7 +28,7 @@ public class DoctorAvailabilityApi implements IDoctorAvailabilityApi {
     private final IDateTimeProvider dateTimeProvider;
 
     @Override
-    @Transactional
+    @Transactional(value = DoctorAvailabilityConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
     public Result<Void> releaseSlot(UUID slotId) {
         SlotEntity slotEntity = slotRepository.findSlotBySlotId(slotId).orElse(null);
         Slot slot = slotMapper.mapToSlot(slotEntity);
@@ -37,7 +37,7 @@ public class DoctorAvailabilityApi implements IDoctorAvailabilityApi {
             return Result.failure(SlotErrors.NOT_FOUND);
         }
 
-        slot.release();
+        slot.release(dateTimeProvider.nowDateTime());
 
         slotRepository.save(updateSlotEntity(slot, slotEntity));
         publishEvents(slot);

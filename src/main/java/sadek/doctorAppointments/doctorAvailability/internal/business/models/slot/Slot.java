@@ -85,8 +85,8 @@ public class Slot extends Entity<SlotId> {
         this.isReserved = true;
     }
 
-    public void release(){
-        //TODO Write Logic and validation if any
+    public void release(LocalDateTime now){
+        validateSlotUpdateEligibility(now);
         this.isReserved = false;
     }
 

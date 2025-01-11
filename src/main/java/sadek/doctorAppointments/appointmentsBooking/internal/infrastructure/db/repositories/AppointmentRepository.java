@@ -48,6 +48,17 @@ public class AppointmentRepository implements IAppointmentRepository {
     }
 
     @Override
+    public Appointment findById(UUID appointmentId) {
+        AppointmentEntity appointmentEntity = appointmentJpaRepository.findById(appointmentId).orElse(null);
+
+        if (appointmentEntity == null) {
+            return null;
+        }
+
+        return appointmentEntity.toAppointment();
+    }
+
+    @Override
     public Boolean isBookingOverlapping(UUID patientId, LocalDateTime startDate, LocalDateTime endDate, AppointmentStatus status) {
         return appointmentJpaRepository.isBookingOverlapping(patientId, startDate, endDate, status).orElse(false);
     }

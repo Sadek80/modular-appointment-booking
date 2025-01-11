@@ -17,5 +17,6 @@ public interface IAppointmentRepository extends IBaseRepository<Appointment> {
 
     List<AppointmentResponseDto> getAllAppointments(UUID patientId);
 
-    Appointment findBySlotId(UUID uuid);
+    Appointment findBySlotId(UUID slotId);
+    Appointment findById(UUID appointmentId);
 }

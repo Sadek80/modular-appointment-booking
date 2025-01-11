@@ -1,8 +1,10 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment;
 
 import lombok.Getter;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentCanceledDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentCreatedDomainEvent;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentUpdatedDomainEvent;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentRuleViolation;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.InvalidAppointmentTime;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.doctor.Doctor;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
@@ -99,5 +101,26 @@ public class Appointment extends Entity<AppointmentId> {
                 endTime,
                 cost
         ));
+    }
+
+    public void cancel(LocalDateTime canceledAt, LocalDateTime now) {
+        validateAppointmentUpdateEligibility(now);
+
+        this.status = AppointmentStatus.CANCELLED;
+        this.canceledAt = now;
+
+        raiseDomainEvent(new AppointmentCanceledDomainEvent(
+                this.getId().value()
+        ));
+    }
+
+    private void validateAppointmentUpdateEligibility(LocalDateTime now) {
+        if (isViolateUpdateHourWindow(now)) {
+            throw new AppointmentRuleViolation(AppointmentErrors.UPDATE_LOCKED);
+        }
+    }
+
+    private boolean isViolateUpdateHourWindow(LocalDateTime now) {
+        return now.isAfter(this.timeRange.startTime().minusHours(MAX_HOURS_BEFORE_APPOINTMENT_ACTIONS));
     }
 }
