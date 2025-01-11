@@ -1,0 +1,12 @@
+services:
+  jpa.doctorAppointments-db:
+    image: postgres:latest
+    container_name: doctorAppointments.Db
+    environment:
+      - POSTGRES_DB=doctorAppointments
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456789
+    volumes:
+      - ./.containers/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
