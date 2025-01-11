@@ -28,9 +28,15 @@ public class AppointmentCreatedConfirmationEventHandler {
     public void handle(AppointmentCreatedDomainEvent event) {
         logger.info("Starting handle of AppointmentCreatedDomainEvent: {}", event);
 
-        String payload = "New appointment created, its details: " + event;
+        sendConformationToDoctor(event);
+        sendConformationToPatient(event);
 
+        logger.info("AppointmentCreatedDomainEvent handled Successfully");
+    }
+
+    private void sendConformationToDoctor(AppointmentCreatedDomainEvent event) {
         try {
+            String payload = "New appointment created, its details: " + event;
             Result<Void> result = appointmentConfirmationApi.sendConfirmationToDoctor(event.doctorId(), payload);
 
             if (result.isFailure()){
@@ -40,6 +46,19 @@ public class AppointmentCreatedConfirmationEventHandler {
         } catch (Exception e) {
             logger.error("Failed to send confirmation to Doctor", e);
         }
+    }
 
-        logger.info("AppointmentCreatedDomainEvent handled Successfully");
-    }}
+    private void sendConformationToPatient(AppointmentCreatedDomainEvent event) {
+        try {
+            String payload = "New appointment created, its details: " + event;
+            Result<Void> result = appointmentConfirmationApi.sendConfirmationToPatient(event.patientId(), payload);
+
+            if (result.isFailure()){
+                logger.error("Failed to send confirmation to Patient: {}", result.getError());
+            }
+
+        } catch (Exception e) {
+            logger.error("Failed to send confirmation to Patient", e);
+        }
+    }
+}
