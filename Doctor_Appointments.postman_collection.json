@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "c149e22e-d3ee-492b-afe0-565a93591565",
+		"name": "Doctor Appointments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38737363"
+	},
+	"item": [
+		{
+			"name": "DoctorAvailability",
+			"item": [
+				{
+					"name": "create SLot",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startTime\": \"2025-01-04T10:00:00\",\n  \"endTime\": \"2025-01-04T12:00:00\",\n  \"cost\": 0.0\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/doctors/availability",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Slot",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startTime\": \"2025-01-04T10:00:00\",\n  \"endTime\": \"2025-01-04T12:00:00\",\n  \"cost\": 40.0\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/doctors/availability/0143ffa9-0bd1-44f7-af0c-3a7b14621a66",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"availability",
+								"0143ffa9-0bd1-44f7-af0c-3a7b14621a66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSlots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/doctors/availability",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AppointmentBooking",
+			"item": [
+				{
+					"name": "book appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"slot_id\": \"bc0e736f-13fe-4ed9-afe6-225fbf29ff72\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/appointments/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all slots",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get all appointments",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor Appointment Booking",
+			"item": [
+				{
+					"name": "complete appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"appointmentId\": \"bc0e736f-13fe-4ed9-afe6-225fbf29ff72\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/doctors/appointments/complete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"appointments",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"appointmentId\": \"bc0e736f-13fe-4ed9-afe6-225fbf29ff72\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/doctors/appointments/complete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"appointments",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all appointments",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
