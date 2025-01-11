@@ -110,7 +110,8 @@ public class Appointment extends Entity<AppointmentId> {
         this.canceledAt = now;
 
         raiseDomainEvent(new AppointmentCanceledDomainEvent(
-                this.getId().value()
+                this.getId().value(),
+                this.patientId.value()
         ));
     }
 
