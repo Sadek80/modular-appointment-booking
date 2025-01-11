@@ -9,6 +9,7 @@ import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.Ap
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.entities.AppointmentEntity;
 import sadek.doctorAppointments.shared.application.IEventBus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +28,8 @@ public class AppointmentRepository implements IAppointmentRepository {
     }
 
     @Override
-    public List<AppointmentResponseDto> getAllAppointments(UUID doctorId) {
-        List<AppointmentEntity> appointmentEntities = appointmentJpaRepository.findAllByDoctorId(doctorId);
+    public List<AppointmentResponseDto> getAllAppointments(UUID doctorId, LocalDateTime now) {
+        List<AppointmentEntity> appointmentEntities = appointmentJpaRepository.findAllByDoctorId(doctorId, now);
         return AppointmentMapper.toAppointmentResponseDtoList(appointmentEntities);
     }
 

@@ -96,7 +96,7 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public Result<Response<List<AppointmentResponseDto>>> getAppointments() {
-        List<AppointmentResponseDto> response = appointmentRepository.getAllAppointments(doctorContext.getUserId());
+        List<AppointmentResponseDto> response = appointmentRepository.getAllAppointments(doctorContext.getUserId(), dateTimeProvider.nowDateTime().toLocalDate().atStartOfDay());
 
         return Result.success(
                 Response.create(response)
