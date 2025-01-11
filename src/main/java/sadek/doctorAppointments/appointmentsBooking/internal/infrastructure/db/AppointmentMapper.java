@@ -10,6 +10,7 @@ public class AppointmentMapper {
 
     public static AppointmentResponseDto toAppointmentResponseDto(AppointmentEntity appointment) {
         return new AppointmentResponseDto(
+                appointment.getAppointmentId(),
                 appointment.getDoctorId(),
                 appointment.getDoctorName(),
                 appointment.getStartTime(),
