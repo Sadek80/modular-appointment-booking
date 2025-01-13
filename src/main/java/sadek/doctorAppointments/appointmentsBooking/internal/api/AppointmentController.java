@@ -9,7 +9,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.application.command
 import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.AppointmentResponseDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.GetAllPatientAppointmentsQuery;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getDoctorAvailableSlots.GetDoctorAvailableSlotQuery;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.application.IQueryHandler;
 import sadek.doctorAppointments.shared.domain.Response;
@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AppointmentController extends BaseController {
     private final ICommandHandler<BookAppointmentCommand, Result<Response<UUID>>> bookAppointmentCommandHandler;
-    private final IQueryHandler<GetDoctorAvailableSlotQuery, Result<Response<List<SlotDto>>>> getDoctorAvailableSlotQueryHandler;
+    private final IQueryHandler<GetDoctorAvailableSlotQuery, Result<Response<List<SlotInfoDto>>>> getDoctorAvailableSlotQueryHandler;
     private final IQueryHandler<GetAllPatientAppointmentsQuery, Result<Response<List<AppointmentResponseDto>>>>  getAllPatientAppointmentsQueryHandler;
 
     @RequestMapping(

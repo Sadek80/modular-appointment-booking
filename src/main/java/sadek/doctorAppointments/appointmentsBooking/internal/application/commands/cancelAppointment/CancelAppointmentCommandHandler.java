@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IDoctorAvailabilityService;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.AppointmentNotFoundException;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
@@ -20,7 +20,7 @@ import sadek.doctorAppointments.shared.application.ILoggerFactory;
 @RequiredArgsConstructor
 public class CancelAppointmentCommandHandler implements ICommandHandler<CancelAppointmentCommand, Result<Void>> {
     private final IAppointmentRepository appointmentRepository;
-    private final IDoctorAvailabilityApi doctorAvailabilityApi;
+    private final IDoctorAvailabilityService doctorAvailabilityService;
     private final IDateTimeProvider dateTimeProvider;
     private final ILoggerFactory loggerFactory;
     private ILogger logger;
@@ -43,11 +43,7 @@ public class CancelAppointmentCommandHandler implements ICommandHandler<CancelAp
 
         appointment.cancel(cancelAppointmentCommand.canceledAt(), dateTimeProvider.nowDateTime());
 
-        Result<Void> result = doctorAvailabilityApi.releaseSlot(appointment.getSlotId().value());
-
-        if (result.isFailure()){
-            return Result.failure(result.getError());
-        }
+        doctorAvailabilityService.releaseSlot(appointment.getSlotId().value());
 
         appointmentRepository.save(appointment);
 

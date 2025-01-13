@@ -8,7 +8,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.InvalidAppointmentTime;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;
@@ -51,7 +51,7 @@ public class Appointment extends Entity<AppointmentId> {
         this.status = status;
     }
 
-    public static Appointment book(SlotDto slotInfo, Patient patient, LocalDateTime now) {
+    public static Appointment book(SlotInfoDto slotInfo, Patient patient, LocalDateTime now) {
         validateBookingTime(slotInfo, now);
         validateBookingTimingCompliance(slotInfo, now);
 
@@ -78,13 +78,13 @@ public class Appointment extends Entity<AppointmentId> {
         return appointment;
     }
 
-    private static void validateBookingTime(SlotDto slotInfo, LocalDateTime now) {
+    private static void validateBookingTime(SlotInfoDto slotInfo, LocalDateTime now) {
         if (now.isAfter(slotInfo.startTime())){
             throw new InvalidAppointmentTime(AppointmentErrors.TIME_DUE);
         }
     }
 
-    private static void validateBookingTimingCompliance(SlotDto slotInfo, LocalDateTime now) {
+    private static void validateBookingTimingCompliance(SlotInfoDto slotInfo, LocalDateTime now) {
         if (now.isAfter(slotInfo.startTime().minusHours(MAX_HOURS_BEFORE_APPOINTMENT_ACTIONS))){
             throw new InvalidAppointmentTime(AppointmentErrors.BOOK_TIMING_VIOLATION);
         }

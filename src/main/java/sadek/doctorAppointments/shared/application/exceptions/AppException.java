@@ -1,5 +1,7 @@
 package sadek.doctorAppointments.shared.application.exceptions;
 
+import sadek.doctorAppointments.shared.domain.Error;
+
 public abstract class AppException extends RuntimeException {
 
     protected AppException(String message) {
@@ -36,6 +38,12 @@ public abstract class AppException extends RuntimeException {
     public static class NotFoundException extends AppException {
         public NotFoundException(String description) {
             super("Not Found: " + (description != null ? description : ""));
+        }
+    }
+
+    public static class IntegrationException extends AppException {
+        public IntegrationException(Error error) {
+            super("Error Happened: " + error.description());
         }
     }
 }

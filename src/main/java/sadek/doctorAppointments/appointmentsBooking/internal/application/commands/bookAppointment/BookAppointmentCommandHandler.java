@@ -6,11 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication.IPatientContext;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IDoctorAvailabilityService;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.services.AppointmentOverlappingService;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
+import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
@@ -26,7 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BookAppointmentCommandHandler implements ICommandHandler<BookAppointmentCommand, Result<Response<UUID>>> {
     private final IAppointmentRepository appointmentRepository;
-    private final IDoctorAvailabilityApi doctorAvailabilityApi;
+    private final IDoctorAvailabilityService doctorAvailabilityService;
     private final IPatientContext patientContext;
     private final IDateTimeProvider dateTimeProvider;
     private final AppointmentOverlappingService appointmentOverlappingService;
@@ -43,23 +44,19 @@ public class BookAppointmentCommandHandler implements ICommandHandler<BookAppoin
     public Result<Response<UUID>> handle(BookAppointmentCommand command) {
         logger.info("Start Handling command: {}", command);
 
-        Result<SlotDto> slotDtoResult = doctorAvailabilityApi.getSlotById(command.slotId());
+        Result<SlotInfoDto> slotDtoResult = doctorAvailabilityService.getSlotById(command.slotId());
 
-        if (slotDtoResult.isFailure()){
-            return Result.failure(slotDtoResult.getError());
-        }
+        SlotInfoDto slotInfoDto = slotDtoResult.getValue();
 
-        SlotDto slotDto = slotDtoResult.getValue();
-
-        TimeRange timeRange = new TimeRange(slotDto.startTime(), slotDto.endTime());
+        TimeRange timeRange = new TimeRange(slotInfoDto.startTime(), slotInfoDto.endTime());
         appointmentOverlappingService.validateNoOverlappingAppointments(patientContext.getUserId(), timeRange);
 
         Appointment newAppointment = Appointment.book(
-                slotDtoResult.getValue(),
+                slotInfoDto,
                 patientContext.getUser(),
                 dateTimeProvider.nowDateTime());
 
-        doctorAvailabilityApi.reserveSlot(command.slotId());
+        doctorAvailabilityService.reserveSlot(command.slotId());
 
         appointmentRepository.save(newAppointment);
 
