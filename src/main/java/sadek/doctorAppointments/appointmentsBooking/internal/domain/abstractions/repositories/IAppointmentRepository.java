@@ -15,8 +15,6 @@ public interface IAppointmentRepository extends IBaseRepository<Appointment> {
     @Override
     void save(Appointment entity);
 
-    List<AppointmentResponseDto> getAllAppointments(UUID patientId);
-
     Appointment findBySlotId(UUID slotId);
     Appointment findById(UUID appointmentId);
 }

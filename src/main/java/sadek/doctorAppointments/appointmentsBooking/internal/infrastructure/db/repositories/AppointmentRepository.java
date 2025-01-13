@@ -2,6 +2,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.repositories.IAppointmentListingRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.AppointmentResponseDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class AppointmentRepository implements IAppointmentRepository {
+public class AppointmentRepository implements IAppointmentRepository, IAppointmentListingRepository {
     private final IAppointmentJpaRepository appointmentJpaRepository;
     private final IPatientJpaRepository patientJpaRepository;
     private final IEventBus eventBus;
