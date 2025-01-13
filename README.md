@@ -62,7 +62,7 @@ In this stage I tried to figure out the module boundaries and a draft of the dom
     
     * It reads the slots info from the Doctor Availability Module replicating doctor basic info.
         
-    * also it should communicate with other modules when is appointment created.
+    * also it should communicate with other modules when appointment is created.
         
 * **Doctor Appointment Management**: It provides just a view of the doctor appointments:
     
@@ -219,3 +219,6 @@ docker-compose up
 2. Run the Project via Intellij IDEA
     
 3. Test via Postman: [Posman Collection](https://github.com/Sadek80/modular-appointment-booking/blob/00958f576e9a76fa46bbc5fde3e2c14b4a9ab0b7/Doctor_Appointments.postman_collection.json)
+
+### Testing
+TODO: will be addin more unit and integration testing whenever having available time.
