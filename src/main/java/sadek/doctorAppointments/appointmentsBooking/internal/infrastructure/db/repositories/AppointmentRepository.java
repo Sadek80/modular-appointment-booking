@@ -29,6 +29,7 @@ public class AppointmentRepository implements IAppointmentRepository, IAppointme
         appointmentJpaRepository.save(appointmentEntity);
 
         model.occurredEvents().forEach(eventBus::publish);
+        model.clearDomainEvents();
     }
 
     @Override

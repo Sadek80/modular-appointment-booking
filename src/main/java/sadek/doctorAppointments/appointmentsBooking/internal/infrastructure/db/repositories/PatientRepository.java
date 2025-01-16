@@ -18,5 +18,6 @@ public class PatientRepository implements IPatientRepository {
         PatientEntity patientEntity = PatientEntity.from(model);
         patientJpaRepository.save(patientEntity);
         model.occurredEvents().forEach(eventBus::publish);
+        model.clearDomainEvents();
     }
 }
