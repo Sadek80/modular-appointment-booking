@@ -7,7 +7,8 @@ import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.AppointmentMapper;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.entities.AppointmentEntity;
-import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.IPublisher;
+import sadek.doctorAppointments.shared.infrastructure.Publisher;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,15 +17,16 @@ import java.util.UUID;
 @Repository("DoctorAppointmentManagement-AppointmentRepository")
 @RequiredArgsConstructor
 public class AppointmentRepository implements IAppointmentRepository {
-    private final IEventBus eventBus;
+    private final IPublisher eventBus;
     private final IAppointmentJpaRepository appointmentJpaRepository;
+    private final Publisher publisher;
 
     @Override
     public void save(Appointment model) {
         AppointmentEntity appointmentEntity = AppointmentEntity.from(model);
         appointmentJpaRepository.save(appointmentEntity);
 
-        model.occurredEvents().forEach(eventBus::publish);
+        model.occurredEvents().forEach(publisher::publish);
         model.clearDomainEvents();
     }
 

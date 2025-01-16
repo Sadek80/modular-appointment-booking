@@ -9,7 +9,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.AppointmentMapper;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.entities.AppointmentEntity;
-import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.IPublisher;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class AppointmentRepository implements IAppointmentRepository, IAppointmentListingRepository {
     private final IAppointmentJpaRepository appointmentJpaRepository;
     private final IPatientJpaRepository patientJpaRepository;
-    private final IEventBus eventBus;
+    private final IPublisher publish;
 
     @Override
     public void save(Appointment model) {
@@ -28,7 +28,7 @@ public class AppointmentRepository implements IAppointmentRepository, IAppointme
         appointmentEntity.setPatient(patientJpaRepository.getReferenceById(appointmentEntity.getPatientId()));
         appointmentJpaRepository.save(appointmentEntity);
 
-        model.occurredEvents().forEach(eventBus::publish);
+        model.occurredEvents().forEach(publish::publish);
         model.clearDomainEvents();
     }
 
@@ -40,7 +40,7 @@ public class AppointmentRepository implements IAppointmentRepository, IAppointme
 
     @Override
     public Appointment findBySlotId(UUID slotId) {
-        AppointmentEntity appointmentEntity = appointmentJpaRepository.findBySlotId(slotId).orElse(null);
+        AppointmentEntity appointmentEntity = appointmentJpaRepository.findBySlotId(slotId, AppointmentStatus.BOOKED).orElse(null);
 
         if (appointmentEntity == null) {
             return null;

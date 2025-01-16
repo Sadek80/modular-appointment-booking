@@ -15,7 +15,7 @@ import sadek.doctorAppointments.doctorAvailability.internal.data.entities.SlotEn
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IDoctorRepository;
 import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.ISlotRepository;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
-import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.IPublisher;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
 
@@ -30,7 +30,7 @@ public class SlotService {
     private final IDoctorRepository doctorRepository;
     private final SlotMapper slotMapper;
     private final IDateTimeProvider dateTimeProvider;
-    private final IEventBus eventBus;
+    private final IPublisher publisher;
 
     @Transactional(DoctorAvailabilityConfig.TRANSACTION_MANAGER)
     public Result<Response<UUID>> createSlot(CreateSlotDto request) {
@@ -101,7 +101,7 @@ public class SlotService {
 
     private void publishEvents(Slot newSlot) {
         if (!newSlot.occurredEvents().isEmpty()) {
-            newSlot.occurredEvents().forEach(eventBus::publish);
+            newSlot.occurredEvents().forEach(publisher::publish);
             newSlot.clearDomainEvents();
         }
     }

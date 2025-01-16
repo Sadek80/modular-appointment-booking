@@ -28,7 +28,7 @@ public class AppointmentCanceledDomainEventHandler {
     public void handle(AppointmentCanceledDomainEvent event) {
         logger.info("Start handling AppointmentCanceledDomainEvent: {}", event);
 
-        eventBus.publishIntegrationEvent(new AppointmentCanceledIntegrationEvent(
+        eventBus.publish(new AppointmentCanceledIntegrationEvent(
                 event.appointmentId(),
                 event.canceledAt()
         ));

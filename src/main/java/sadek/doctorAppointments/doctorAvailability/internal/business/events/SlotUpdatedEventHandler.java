@@ -25,7 +25,7 @@ public class SlotUpdatedEventHandler {
     public void handle(SlotUpdatedEvent event) {
         logger.info("Start Handling updated event: " + event);
 
-        eventBus.publishIntegrationEvent(new SlotUpdatedIntegrationEvent(
+        eventBus.publish(new SlotUpdatedIntegrationEvent(
                 event.slotId(),
                 event.startTime(),
                 event.endTime(),

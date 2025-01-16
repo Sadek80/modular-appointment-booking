@@ -13,7 +13,7 @@ import sadek.doctorAppointments.doctorAvailability.internal.data.repositories.IS
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
-import sadek.doctorAppointments.shared.application.IEventBus;
+import sadek.doctorAppointments.shared.application.IPublisher;
 import sadek.doctorAppointments.shared.domain.Result;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class DoctorAvailabilityApi implements IDoctorAvailabilityApi {
     private final ISlotRepository slotRepository;
     private final SlotMapper slotMapper;
-    private final IEventBus eventBus;
+    private final IPublisher publisher;
     private final IDateTimeProvider dateTimeProvider;
 
     @Override
@@ -92,7 +92,7 @@ public class DoctorAvailabilityApi implements IDoctorAvailabilityApi {
 
     private void publishEvents(Slot newSlot) {
         if (!newSlot.occurredEvents().isEmpty()) {
-            newSlot.occurredEvents().forEach(eventBus::publish);
+            newSlot.occurredEvents().forEach(publisher::publish);
             newSlot.clearDomainEvents();
         }
     }

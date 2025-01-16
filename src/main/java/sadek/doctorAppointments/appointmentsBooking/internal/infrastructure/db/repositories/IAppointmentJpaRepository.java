@@ -15,7 +15,12 @@ import java.util.UUID;
 public interface IAppointmentJpaRepository extends JpaRepository<AppointmentEntity, UUID> {
     List<AppointmentEntity> findAllByPatientId(UUID patientId);
 
-    Optional<AppointmentEntity> findBySlotId(UUID slotId);
+    @Query("""
+            SELECT a
+            FROM AppointmentEntity a
+            WHERE a.status = :status AND a.slotId = :slotId
+""")
+    Optional<AppointmentEntity> findBySlotId(UUID slotId, AppointmentStatus status);
 
     @Query("""
             SELECT TRUE

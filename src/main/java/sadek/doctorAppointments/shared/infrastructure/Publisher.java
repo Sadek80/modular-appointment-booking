@@ -3,16 +3,16 @@ package sadek.doctorAppointments.shared.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.shared.application.IEventBus;
-import sadek.doctorAppointments.shared.domain.abstractions.IIntegrationEvent;
+import sadek.doctorAppointments.shared.application.IPublisher;
+import sadek.doctorAppointments.shared.domain.abstractions.IDomainEvent;
 
 @Component
 @RequiredArgsConstructor
-public class EventBus implements IEventBus {
+public class Publisher implements IPublisher {
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
-    public void publish(IIntegrationEvent integrationEvent) {
-        eventPublisher.publishEvent(integrationEvent);
+    public void publish(IDomainEvent domainEvent) {
+        eventPublisher.publishEvent(domainEvent);
     }
 }

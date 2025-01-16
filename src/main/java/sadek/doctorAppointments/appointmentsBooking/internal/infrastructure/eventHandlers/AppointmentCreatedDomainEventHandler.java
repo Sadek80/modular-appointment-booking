@@ -28,7 +28,7 @@ public class AppointmentCreatedDomainEventHandler {
     public void handle(AppointmentCreatedDomainEvent event) {
         logger.info("Starting handle of AppointmentCreatedDomainEvent: {}", event);
 
-        eventBus.publishIntegrationEvent(new AppointmentCreatedIntegrationEvent(
+        eventBus.publish(new AppointmentCreatedIntegrationEvent(
                 event.appointmentId(),
                 event.startTime(),
                 event.endTime(),
