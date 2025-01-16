@@ -8,6 +8,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import sadek.doctorAppointments.shared.application.exceptions.AppException;
 import sadek.doctorAppointments.shared.application.exceptions.DomainException;
+import sadek.doctorAppointments.shared.domain.Error;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,7 +46,9 @@ public class GlobalExceptionHandler {
         body.put("code", ex.getError().code());
         body.put("error_type", ex.getError().type().name());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+        HttpStatus status = getHttpStatus(ex.getError());
+
+        return ResponseEntity.status(status).body(body);
     }
 
     @ExceptionHandler({Exception.class, RuntimeException.class})
@@ -59,5 +62,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Object> handleNotFoundException(Exception ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyMap());
+    }
+
+    private static HttpStatus getHttpStatus(Error error) {
+        return switch (error.type()) {
+            case NOT_FOUND -> HttpStatus.NOT_FOUND;
+            case CONFLICT -> HttpStatus.CONFLICT;
+            case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
+            default -> HttpStatus.BAD_REQUEST;
+        };
     }
 }
