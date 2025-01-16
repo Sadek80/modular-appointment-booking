@@ -129,17 +129,17 @@ class SlotTest {
     }
 
     @Test
-    void update_shouldRaiseSlotUpdatedEvent() {
+    void update_shouldRaiseSlotUpdatedEventIfReserved() {
         double newCost = 70.0;
         LocalDateTime newStartTime = startTime.plusHours(1);
         LocalDateTime newEndTime = newStartTime.plusHours(2);
 
         Slot slot = Slot.create(doctorId, startTime, endTime, 50.0, now);
+        slot.reserve(now);
 
         slot.update(newStartTime, newEndTime, newCost, now);
 
         List<IDomainEvent> domainEvents = slot.occurredEvents();
-        assertFalse(domainEvents.isEmpty());
         assertInstanceOf(SlotUpdatedEvent.class, domainEvents.get(0));
 
         SlotUpdatedEvent event = (SlotUpdatedEvent) domainEvents.get(0);
