@@ -45,9 +45,12 @@ public class CancelAppointmentCommandHandler implements ICommandHandler<CancelAp
 
         doctorAvailabilityService.releaseSlot(appointment.getSlotId().value());
 
-        appointmentRepository.save(appointment);
-
-        logger.info("CancelAppointmentCommand handled successfully");
+        try {
+            appointmentRepository.save(appointment);
+            logger.info("CancelAppointmentCommand handled successfully");
+        } catch (Exception e) {
+            doctorAvailabilityService.reserveSlot(appointment.getSlotId().value());
+        }
 
         return Result.success();
     }

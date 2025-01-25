@@ -58,9 +58,13 @@ public class BookAppointmentCommandHandler implements ICommandHandler<BookAppoin
 
         doctorAvailabilityService.reserveSlot(command.slotId());
 
-        appointmentRepository.save(newAppointment);
+        try {
+            appointmentRepository.save(newAppointment);
+            logger.info("Command handled successfully");
 
-        logger.info("Command handled successfully");
+        } catch (Exception e) {
+            doctorAvailabilityService.releaseSlot(command.slotId());
+        }
 
         return Result.success(
                 Response.create(newAppointment.getId().value())
