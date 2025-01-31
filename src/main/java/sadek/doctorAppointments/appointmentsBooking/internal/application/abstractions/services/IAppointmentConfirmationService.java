@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services;
 
 import sadek.doctorAppointments.shared.domain.Result;
 

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.IAppointmentConfirmationService;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IAppointmentConfirmationService;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.events.AppointmentCreatedDomainEvent;
 import sadek.doctorAppointments.shared.application.ILogger;
 import sadek.doctorAppointments.shared.application.ILoggerFactory;

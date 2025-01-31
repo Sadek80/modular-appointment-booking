@@ -2,7 +2,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.ser
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.IAppointmentConfirmationService;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IAppointmentConfirmationService;
 import sadek.doctorAppointments.appointmentsConfirmation.publicAPI.IAppointmentConfirmationApi;
 import sadek.doctorAppointments.shared.domain.Result;
 
