@@ -6,14 +6,12 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.entities.PatientEntity;
 import sadek.doctorAppointments.shared.application.IPublisher;
-import sadek.doctorAppointments.shared.infrastructure.Publisher;
 
 @Repository
 @RequiredArgsConstructor
 public class PatientRepository implements IPatientRepository {
     private final IPatientJpaRepository patientJpaRepository;
-    private final IPublisher eventBus;
-    private final Publisher publisher;
+    private final IPublisher publisher;
 
     @Override
     public void save(Patient model) {

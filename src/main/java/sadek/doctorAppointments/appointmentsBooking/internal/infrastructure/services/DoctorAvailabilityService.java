@@ -2,8 +2,8 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.ser
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IDoctorAvailabilityService;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.IDoctorAvailabilityService;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.mappers.SlotDtoMapper;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.IDoctorAvailabilityApi;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;

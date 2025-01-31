@@ -1,5 +1,7 @@
 package sadek.doctorAppointments.shared.domain.abstractions;
 
-public interface IBaseRepository<T> {
+import sadek.doctorAppointments.shared.domain.Entity;
+
+public interface IBaseRepository<T extends Entity<?>> {
     void save(T model);
 }

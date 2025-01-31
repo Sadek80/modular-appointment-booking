@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.getAllPatientAppointments;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

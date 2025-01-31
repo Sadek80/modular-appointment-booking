@@ -1,7 +1,7 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.mappers;
 
 import org.springframework.stereotype.Component;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.getAllPatientAppointments;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

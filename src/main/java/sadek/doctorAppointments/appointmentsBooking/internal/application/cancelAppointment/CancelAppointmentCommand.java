@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.commands.cancelAppointment;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.cancelAppointment;
 
 import sadek.doctorAppointments.shared.application.ICommand;
 

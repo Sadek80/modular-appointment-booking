@@ -1,18 +1,17 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.commands.bookAppointment;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.bookAppointment;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.AppointmentBookingApplicationConfig;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.authentication.IPatientContext;
-import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IDoctorAvailabilityService;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.IDoctorAvailabilityService;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.services.AppointmentOverlappingService;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.config.AppointmentBookingConfig;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
-import sadek.doctorAppointments.doctorAvailability.publicAPI.SlotDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
 import sadek.doctorAppointments.shared.application.ILogger;
@@ -40,7 +39,7 @@ public class BookAppointmentCommandHandler implements ICommandHandler<BookAppoin
     }
 
     @Override
-    @Transactional(value = AppointmentBookingConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(value = AppointmentBookingApplicationConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
     public Result<Response<UUID>> handle(BookAppointmentCommand command) {
         logger.info("Start Handling command: {}", command);
 

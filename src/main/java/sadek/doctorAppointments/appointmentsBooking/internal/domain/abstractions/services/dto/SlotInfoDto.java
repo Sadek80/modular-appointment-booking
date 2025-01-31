@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto;
+package sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

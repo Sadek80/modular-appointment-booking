@@ -3,7 +3,7 @@ package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.repositories.IAppointmentListingRepository;
-import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.AppointmentResponseDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.getAllPatientAppointments.AppointmentResponseDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories.IAppointmentRepository;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class AppointmentRepository implements IAppointmentRepository, IAppointmentListingRepository {
     private final IAppointmentJpaRepository appointmentJpaRepository;
     private final IPatientJpaRepository patientJpaRepository;
-    private final IPublisher publish;
+    private final IPublisher publisher;
 
     @Override
     public void save(Appointment model) {
@@ -28,7 +28,7 @@ public class AppointmentRepository implements IAppointmentRepository, IAppointme
         appointmentEntity.setPatient(patientJpaRepository.getReferenceById(appointmentEntity.getPatientId()));
         appointmentJpaRepository.save(appointmentEntity);
 
-        model.occurredEvents().forEach(publish::publish);
+        model.occurredEvents().forEach(publisher::publish);
         model.clearDomainEvents();
     }
 

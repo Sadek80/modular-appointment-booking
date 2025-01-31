@@ -1,6 +1,6 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services;
+package sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services;
 
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.domain.Result;
 
 import java.util.List;

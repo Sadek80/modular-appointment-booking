@@ -1,6 +1,6 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db;
 
-import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.AppointmentResponseDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.getAllPatientAppointments.AppointmentResponseDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db.entities.AppointmentEntity;
 
 import java.util.List;

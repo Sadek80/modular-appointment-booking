@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.AppointmentBookingApplicationConfig;
 
 import javax.sql.DataSource;
 
@@ -20,7 +21,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
         basePackages = {AppointmentBookingConfig.ENTITIES_PACKAGE},
         entityManagerFactoryRef = AppointmentBookingConfig.ENTITY_MANAGER,
-        transactionManagerRef = AppointmentBookingConfig.TRANSACTION_MANAGER
+        transactionManagerRef = AppointmentBookingApplicationConfig.TRANSACTION_MANAGER
 )
 public class AppointmentBookingDatabaseConfig {
 
@@ -41,7 +42,7 @@ public class AppointmentBookingDatabaseConfig {
                 .build();
     }
 
-    @Bean(name = AppointmentBookingConfig.TRANSACTION_MANAGER)
+    @Bean(name = AppointmentBookingApplicationConfig.TRANSACTION_MANAGER)
     public PlatformTransactionManager appointmentBookingTransactionManager(
             @Qualifier(AppointmentBookingConfig.ENTITY_MANAGER) EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);

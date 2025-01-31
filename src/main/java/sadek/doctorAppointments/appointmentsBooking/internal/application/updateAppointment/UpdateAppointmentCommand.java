@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.commands.updateAppointment;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.updateAppointment;
 
 import sadek.doctorAppointments.shared.application.ICommand;
 

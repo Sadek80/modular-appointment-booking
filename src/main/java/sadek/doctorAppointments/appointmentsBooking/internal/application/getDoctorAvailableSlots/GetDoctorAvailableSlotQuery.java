@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getDoctorAvailableSlots;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.getDoctorAvailableSlots;
 
 import sadek.doctorAppointments.shared.application.IQuery;
 

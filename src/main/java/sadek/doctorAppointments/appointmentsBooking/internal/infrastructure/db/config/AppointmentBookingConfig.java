@@ -4,7 +4,6 @@ public class AppointmentBookingConfig {
     public static final String DATA_SOURCE = "appointmentBookingDataSource";
     public static final String DATABASE_PROPERTIES_PREFIX = "sadek.doctor.appointments.appointment.booking.datasource";
     public static final String ENTITY_MANAGER = "appointmentBookingEntityManager";
-    public static final String TRANSACTION_MANAGER = "appointmentBookingTransactionManager";
     public static final String ENTITIES_PACKAGE = "sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.db";
     public static final String PERSISTENT_UNIT = "appointmentBooking";
     public static final String SCHEMA = "appointment_booking";

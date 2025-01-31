@@ -8,7 +8,7 @@ import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.exceptions.InvalidAppointmentTime;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.Patient;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.patient.PatientId;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.domain.Entity;
 import sadek.doctorAppointments.shared.domain.valueObject.Cost;
 import sadek.doctorAppointments.shared.domain.valueObject.TimeRange;

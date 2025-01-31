@@ -1,9 +1,9 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getDoctorAvailableSlots;
+package sadek.doctorAppointments.appointmentsBooking.internal.application.getDoctorAvailableSlots;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.application.abstractions.services.IDoctorAvailabilityService;
-import sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.services.dto.SlotInfoDto;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.IDoctorAvailabilityService;
+import sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.services.dto.SlotInfoDto;
 import sadek.doctorAppointments.shared.application.IQueryHandler;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;

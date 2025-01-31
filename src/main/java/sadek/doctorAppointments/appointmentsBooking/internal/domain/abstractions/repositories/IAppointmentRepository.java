@@ -1,12 +1,10 @@
 package sadek.doctorAppointments.appointmentsBooking.internal.domain.abstractions.repositories;
 
-import sadek.doctorAppointments.appointmentsBooking.internal.application.queries.getAllPatientAppointments.AppointmentResponseDto;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.Appointment;
 import sadek.doctorAppointments.appointmentsBooking.internal.domain.appointment.AppointmentStatus;
 import sadek.doctorAppointments.shared.domain.abstractions.IBaseRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public interface IAppointmentRepository extends IBaseRepository<Appointment> {

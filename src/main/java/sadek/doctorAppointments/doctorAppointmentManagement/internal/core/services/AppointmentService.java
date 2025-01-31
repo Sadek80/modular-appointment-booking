@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto.*;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.DoctorAppointmentManagementCoreConfig;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.IAppointmentService;
+import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.inputPorts.dto.*;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.Appointment;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.models.AppointmentErrors;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.authentication.IDoctorContext;
 import sadek.doctorAppointments.doctorAppointmentManagement.internal.core.outputPorts.repositories.IAppointmentRepository;
-import sadek.doctorAppointments.doctorAppointmentManagement.internal.shell.db.config.DoctorAppointmentManagementConfig;
 import sadek.doctorAppointments.shared.domain.Response;
 import sadek.doctorAppointments.shared.domain.Result;
 import sadek.doctorAppointments.shared.application.IDateTimeProvider;
@@ -25,7 +25,7 @@ public class AppointmentService implements IAppointmentService {
     private final IDateTimeProvider dateTimeProvider;
 
     @Override
-    @Transactional(value = DoctorAppointmentManagementConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(value = DoctorAppointmentManagementCoreConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
     public Result<Void> createAppointment(CreateAppointmentDto request) {
         Appointment appointment = appointmentRepository.findById(request.appointmentId());
 
@@ -50,7 +50,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(value = DoctorAppointmentManagementConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(value = DoctorAppointmentManagementCoreConfig.TRANSACTION_MANAGER, propagation = Propagation.REQUIRES_NEW)
     public Result<Void> updateAppointment(UpdateAppointmentDto request) {
         Appointment appointment = appointmentRepository.findById(request.appointmentId());
 
@@ -65,7 +65,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(value = DoctorAppointmentManagementConfig.TRANSACTION_MANAGER)
+    @Transactional(value = DoctorAppointmentManagementCoreConfig.TRANSACTION_MANAGER)
     public Result<Void> cancelAppointment(CancelAppointmentDto request) {
         Appointment appointment = appointmentRepository.findById(request.appointmentId());
 
@@ -80,7 +80,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(value = DoctorAppointmentManagementConfig.TRANSACTION_MANAGER)
+    @Transactional(value = DoctorAppointmentManagementCoreConfig.TRANSACTION_MANAGER)
     public Result<Void> completeAppointment(CompleteAppointmentDto request) {
         Appointment appointment = appointmentRepository.findById(request.appointmentId());
 

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import sadek.doctorAppointments.appointmentsBooking.internal.application.commands.cancelAppointment.CancelAppointmentCommand;
+import sadek.doctorAppointments.appointmentsBooking.internal.application.cancelAppointment.CancelAppointmentCommand;
 import sadek.doctorAppointments.doctorAppointmentManagement.publicAPI.events.AppointmentCanceledIntegrationEvent;
 import sadek.doctorAppointments.shared.application.ICommandHandler;
 import sadek.doctorAppointments.shared.domain.Result;
