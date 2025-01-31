@@ -44,7 +44,6 @@ public class BookAppointmentCommandHandler implements ICommandHandler<BookAppoin
         logger.info("Start Handling command: {}", command);
 
         Result<SlotInfoDto> slotDtoResult = doctorAvailabilityService.getSlotById(command.slotId());
-
         SlotInfoDto slotInfoDto = slotDtoResult.getValue();
 
         TimeRange timeRange = new TimeRange(slotInfoDto.startTime(), slotInfoDto.endTime());
