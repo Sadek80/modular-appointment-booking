@@ -35,6 +35,9 @@ public class AppointmentEntity {
     @Column(name = "doctor_id", nullable = false)
     private UUID doctorId;
 
+    @Column(name = "slot_id", nullable = false)
+    private UUID slotId;
+
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
