@@ -1,4 +1,4 @@
-package sadek.doctorAppointments.appointmentsBooking.internal.application.eventHandlers;
+package sadek.doctorAppointments.appointmentsBooking.internal.infrastructure.eventHandlers.confirmation;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
