@@ -106,7 +106,7 @@ public class Appointment extends Entity<AppointmentId> {
         validateAppointmentUpdateEligibility(now);
 
         this.status = AppointmentStatus.CANCELLED;
-        this.canceledAt = now;
+        this.canceledAt = canceledAt;
 
         raiseDomainEvent(new AppointmentCanceledDomainEvent(
                 this.getId().value(),
