@@ -2,11 +2,24 @@ services:
   jpa.doctorAppointments-db:
     image: postgres:latest
     container_name: doctorAppointments.Db
+    restart: on-failure
     environment:
       - POSTGRES_DB=doctorAppointments
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456789
     volumes:
-      - ./.containers/database:/var/lib/postgresql/data
+      - /home/mohamed-sadek/test-container-data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5434:5432
+
+  doctor-appointments-app:
+    build: .
+    container_name: doctor-appointment-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - jpa.doctorAppointments-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://jpa.doctorAppointments-db:5432/doctorAppointments
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456789
